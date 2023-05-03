@@ -1,0 +1,393 @@
+/* Variable */
+:root {
+  --primary: #9cd203;
+  --hover: #79a300;
+  --bg: #eeeeee;
+}
+/* Login */
+.login {
+  background-image: url("img/image.jpg");
+  background-size: cover;
+}
+
+/* Center daftar */
+
+.daftar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background: var(--bg);
+  border-radius: 10px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
+}
+.center h1 {
+  text-align: center;
+  padding: 20px 0;
+  color: var(--primary);
+}
+.center form {
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+/* End Center daftar */
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background: var(--bg);
+  border-radius: 10px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
+}
+.center h1 {
+  text-align: center;
+  padding: 20px 0;
+  color: var(--primary);
+}
+.center form {
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+form .txt_field {
+  position: relative;
+  border-bottom: 2px solid black;
+  margin: 30px 0;
+}
+.txt_field input {
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  background: none;
+  outline: none;
+}
+.txt_field label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  color: #adadad;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.5s;
+}
+.txt_field span::before {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--primary);
+  transition: 0.5s;
+}
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label {
+  top: -5px;
+  color: var(--primary);
+}
+.txt_field input:focus ~ span::before,
+.txt_field input:valid ~ span::before {
+  width: 100%;
+}
+.pass {
+  margin: -5px 0 20px 5px;
+  color: black;
+  cursor: pointer;
+}
+.pass:hover {
+  text-decoration: underline;
+}
+.button {
+  width: 100%;
+  height: 50px;
+  border: 1px solid;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.signup_link {
+  margin: 30px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #666666;
+}
+.signup_link a {
+  color: #2691d9;
+  text-decoration: none;
+}
+.signup_link a:hover {
+  text-decoration: underline;
+}
+
+/* End Login */
+
+/* Modal */
+/* melebarkan modal */
+.edit {
+  max-width: 800px;
+}
+
+/* tengahkan gambar */
+.edit img {
+  display: block;
+  margin: 0 auto;
+  width: 30%;
+  height: 30%;
+}
+
+.modal-body img {
+  max-height: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Modal */
+
+/*  My Class*/
+.table-inti {
+  background-color: var(--primary);
+}
+
+.judul {
+  color: var(--primary);
+}
+
+.text {
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  background-color: var(--bg);
+}
+.text-head {
+  margin-top: 8rem;
+}
+
+.btn-inti {
+  background-color: var(--primary) !important;
+}
+
+.btn-inti:hover {
+  background-color: var(--hover) !important;
+}
+
+/* End My Class */
+
+/* SideBar */
+.sidebar ul {
+  list-style: none;
+  margin-top: 50px;
+}
+
+.sidebar li {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.sidebar a {
+  display: block;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: var(--primary);
+}
+
+/* End SideBar */
+
+/* Nav  */
+.nav-item {
+  margin: 3px !important;
+  padding: 5px;
+}
+
+.nav-item a:hover {
+  background-color: var(--primary);
+  border-radius: 12px;
+}
+/* End Nav */
+
+/* Jumbotron */
+.jumbotron {
+  background-image: url("img/bg1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: #fff;
+}
+.jumbotron::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 20%;
+  bottom: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(238, 238, 238, 1) 1%,
+    rgba(238, 238, 238, 0) 25%
+  );
+}
+.jumbotron .contain {
+  padding: 1.4rem 7%;
+  max-width: 60rem;
+}
+.jumbotron .contain h1 {
+  font-size: 5em;
+  text-shadow: 1px 1px 3px rgba(1, 1, 3, 0.5);
+  line-height: 1.2;
+}
+.jumbotron .contain h1 span {
+  color: var(--primary);
+}
+.jumbotron .contain p {
+  font-size: 1.4rem;
+  margin-top: 1rem;
+  font-weight: 300;
+  text-shadow: 1px 1px 3px rgba(1, 1, 3, 1);
+}
+.jumbotron .contain .btn {
+  margin-top: 1rem;
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1.4rem;
+  color: black;
+  text-decoration: none;
+  background-color: var(--primary);
+  border-radius: 0.5rem;
+  box-shadow: 1px 1px 3px rgba(1, 1, 3, 0.5);
+}
+
+/* End Jumbotron */
+
+/* index */
+.about,
+.pembayaran,
+.contact {
+  padding: 8rem 7% 1.4rem;
+  color: black;
+}
+.about h2,
+.pembayaran h2,
+.contact h2,
+.lapangan h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+.about h2 span,
+.pembayaran h2 span,
+.contact h2 span,
+.lapangan h2 span {
+  color: var(--primary);
+}
+.about .row {
+  display: flex;
+}
+.about .row .about-img {
+  flex: 1 1 30rem;
+}
+.about .row .about-img img {
+  width: 100%;
+}
+.about .row .contain {
+  flex: 1 1 35rem;
+  padding: 0 1rem;
+  margin-left: 1rem;
+}
+.about .row h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.about .row .contain p {
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 30px;
+  text-align: center;
+}
+.about .row .contain span {
+  color: var(--primary);
+}
+/* End Index */
+
+/* Contact */
+.map {
+  width: 100%;
+  height: 100%;
+  margin-top: 1rem;
+}
+.contact .row form {
+  padding: 2rem 2rem;
+  text-align: center;
+}
+.contact .row .input-group {
+  margin: 1rem;
+}
+.contact .row .input-group input,
+.contact .row .input-group .input-group-text {
+  padding: 1.5rem;
+}
+.contact .row form button {
+  margin-top: 3rem;
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1rem;
+  background-color: var(--primary);
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+/* End Contact */
+
+/* footer */
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--primary);
+  text-align: center;
+  margin-top: 3rem;
+  padding-bottom: 3rem;
+}
+footer .social {
+  padding: 1rem 0;
+}
+footer .social a {
+  color: black;
+  margin: 1rem;
+}
+footer .social a:hover {
+  color: var(--bg);
+}
+footer .links {
+  margin-bottom: 2rem;
+}
+footer .links a {
+  color: black;
+  padding: 0.7rem 1rem;
+  text-decoration: none;
+}
+footer .links a:hover {
+  color: var(--bg);
+}
+footer .credit a {
+  color: var(--bg);
+  font-weight: 700;
+}
+
+/* End Footer */
