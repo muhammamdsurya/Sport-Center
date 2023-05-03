@@ -356,9 +356,6 @@ form .txt_field {
 
 /* footer */
 footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
   background-color: var(--primary);
   text-align: center;
   margin-top: 3rem;

@@ -407,7 +407,7 @@ if (isset($_POST["bayar"])) {
   </section>
 
   <!-- footer -->
-  <footer class="py-3 mt-5">
+  <footer class="fixed-bottom py-3 mt-5">
     <div class="social">
       <a href="#"><i data-feather="instagram"></i></a>
       <a href="#"><i data-feather="facebook"></i></a>

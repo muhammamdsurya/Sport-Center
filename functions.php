@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "db_futsal");
+$conn = mysqli_connect("localhost", "id20696418_root", "Kucing123456@", "id20696418_db_futsal");
 
 function query($query)
 {
