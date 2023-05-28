@@ -32,7 +32,7 @@ left JOIN bayar ON sewa.idsewa = bayar.idsewa
 WHERE sewa.iduser = '$id_user' LIMIT $awalData, $jmlHalamanPerData");
 // Pagination
 
-$profil = query("SELECT * FROM user")[0];
+$profil = query("SELECT * FROM user WHERE id_user = '$id_user'")[0];
 
 
 if (isset($_POST["simpan"])) {
@@ -270,7 +270,7 @@ if (isset($_POST["bayar"])) {
                               <div class="col">
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Lama Main</label>
-                                  <input type="number" name="jam_mulai" class="form-control" id="exampleInputPassword1" value="<?= $row["lama"]; ?>" disabled>
+                                  <input type="text" name="jam_mulai" class="form-control" id="exampleInputPassword1" value="<?= $row["lama"]; ?>" disabled>
                                 </div>
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Harga</label>
@@ -282,6 +282,9 @@ if (isset($_POST["bayar"])) {
                                   <span class="input-group-text">Total</span>
                                 </div>
                                 <input type="number" name="total" class="form-control border border-danger" id="exampleInputPassword1" value="<?= $row["tot"]; ?>" disabled>
+                              </div>
+                              <div class="mt-3">
+                                <label for="exampleInputPassword1" class="form-label">Transfer ke : BRI 0892322132 a/n Sport Center</label>
                               </div>
                               <div class="mt-3">
                                 <label for="exampleInputPassword1" class="form-label">Upload Bukti</label>
@@ -329,7 +332,7 @@ if (isset($_POST["bayar"])) {
                               <div class="col">
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Lama Main</label>
-                                  <input type="number" name="jam_mulai" class="form-control" id="exampleInputPassword1" value="<?= $row["lama"]; ?>" disabled>
+                                  <input type="time" name="jam_mulai" class="form-control" id="exampleInputPassword1" value="<?= $row["lama"]; ?>" disabled>
                                 </div>
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Harga</label>

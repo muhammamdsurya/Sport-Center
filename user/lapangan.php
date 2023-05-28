@@ -6,8 +6,10 @@ if ($role !== 'User') {
   header("location:../login.php");
 }
 
+$id = $_SESSION["id_user"];
+
 $lapangan = query("SELECT * FROM lapangan");
-$profil = query("SELECT * FROM user")[0];
+$profil = query("SELECT * FROM user WHERE id_user = '$id'")[0];
 
 if (isset($_POST["simpan"])) {
   if (edit($_POST) > 0) {

@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "id20696418_root", "Kucing123456@", "id20696418_db_futsal");
+$conn = mysqli_connect("localhost", "root", "", "db_futsal");
 
 function query($query)
 {
@@ -106,7 +106,7 @@ function pesan($data)
 
   $userid = $_SESSION["id_user"];
   $idlpg = $data["id_lpg"];
-  $lama = $data["jam_mulai"];
+  $lama =  $data["jam_mulai"];
   $mulai = $data["tgl_main"];
   $mulai_waktu = strtotime($mulai); // mengubah format datetime-local menjadi format UNIX timestamp
   $habis_waktu = $mulai_waktu + (intval($lama) * 3600); // menambahkan waktu dalam menit ke waktu awal

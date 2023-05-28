@@ -2,7 +2,9 @@
 session_start();
 require "functions.php";
 
-$profil = query("SELECT * FROM user ")[0];
+$id_user = $_SESSION["id_user"];
+
+$profil = query("SELECT * FROM user WHERE id_user = '$id_user'")[0];
 
 
 if (isset($_POST["simpan"])) {
@@ -197,7 +199,7 @@ if (isset($_POST["simpan"])) {
       </div>
       <div class="contain" data-aos="fade-left" data-aos-duration="1000">
         <h4 class="text-center mb-3">Kenapa Memilih kami?</h4>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur eaque nesciunt error recusandae est sunt accusamus nostrum ab earum. Atque incidunt maxime, natus enim obcaecati sed exercitationem ipsum quod et quis corporis similique sapiente tempore cupiditate minus aliquam tempora ab sint sunt aliquid vel veritatis rerum libero. Illum laborum eius labore soluta rerum unde provident qui officia magnam et quisquam fugit velit ea amet, doloribus veritatis aliquid sapiente id quae cum pariatur vel aspernatur reprehenderit repudiandae. Fugit consectetur odit qui ut architecto exercitationem ullam iste? Nisi voluptate harum corrupti iure qui! Corporis fugiat reiciendis deleniti error saepe eum nam nemo!</p>
+        <p>Sport Center adalah pusat olahraga yang menyediakan berbagai fasilitas dan layanan penyewaan lapangan untuk berbagai jenis olahraga. Tempat ini dirancang untuk memfasilitasi kegiatan olahraga dan rekreasi bagi individu, kelompok, dan komunitas yang memiliki minat dalam berpartisipasi dalam aktivitas fisik. Sport Center menawarkan beragam jenis lapangan yang dapat disewa untuk berbagai jenis olahraga, seperti sepak bola, futsal, tenis, basket, voli, dan masih banyak lagi. Setiap lapangan dilengkapi dengan fasilitas yang sesuai, termasuk garis-garis permainan, jaring, dan peralatan yang dibutuhkan untuk menjalankan aktivitas olahraga dengan lancar.</p>
       </div>
     </div>
   </section>
@@ -208,13 +210,16 @@ if (isset($_POST["simpan"])) {
     <h2 data-aos="fade-down" data-aos-duration="1000">
       <span>Tata Cara</span> Pembayaran
     </h2>
-    <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae ab cum rem consectetur animi perferendis voluptas placeat voluptatibus recusandae eveniet!</p>
+    <p class="text-center">Berikut adalah tata cara pembayaran lapangan pada website Sport Center:</p>
     <ul class="border list-group list-group-flush mt-5">
-      <li class="list-group-item">1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, quas.</li>
-      <li class="list-group-item">2. Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
-      <li class="list-group-item">3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit!</li>
-      <li class="list-group-item">4. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia, vel tempore?</li>
-      <li class="list-group-item">5. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi, quibusdam! Id, illo!</li>
+      <li class="list-group-item">1. Pengguna harus membuat akun atau mendaftar sebagai anggota pada website Sport Center.</li>
+      <li class="list-group-item">2. Pengguna dapat memilih jenis lapangan yang ingin dipesan, memilih tanggal dan waktu tertentu.</li>
+      <li class="list-group-item">3. Pengguna harus memilih tanggal dan waktu, melihat harga sewa lapangan, mengisi jumlah jam atau durasi, melengkapi formulir pemesanan.</li>
+      <li class="list-group-item">4. Bila Dirasa sudah sesuai, pengguna dapat meng klik tombol pesan.</li>
+      <li class="list-group-item">5. Lalu pengguna akan diarahkan ke menu pembayaran</li>
+      <li class="list-group-item">5. Lakukan pembayaran ke rekening yang sudah tertera dan upload bukti pembayaran</li>
+      <li class="list-group-item">5. Setelah upload, tunggu admin menyetujui pembayaran anda</li>
+      <li class="list-group-item">5. Setelah status sudah di setujui, silahkan datang ke Sport Center sesuai jadwal yang di pesan</li>
     </ul>
   </section>
   <!-- End Pembayaran -->

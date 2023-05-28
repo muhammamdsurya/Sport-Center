@@ -15,7 +15,7 @@ JOIN lapangan ON sewa.idlap = lapangan.idlap
 LEFT JOIN user ON sewa.iduser = user.id_user
 WHERE lapangan.idlap = '$id_lpg'
 ");
-$profil = query("SELECT * FROM user")[0];
+$profil = query("SELECT * FROM user WHERE id_user = '$id_user'")[0];
 
 
 ?>
