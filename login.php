@@ -16,7 +16,7 @@ if (isset($_POST["login"])) {
   $username = $_POST["username"];
   $password = $_POST["password"];
 
-  $cariadmin = query("SELECT * FROM admin WHERE username = '$username' AND password = '$password'");
+  $cariadmin = query("SELECT * FROM admin WHERE email = '$username' AND password = '$password'");
   $cariuser = query("SELECT * FROM user WHERE email = '$username' AND password = '$password'");
 
   if ($cariadmin) {
