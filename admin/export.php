@@ -7,10 +7,10 @@ if ($role !== 'Admin') {
   header("location:../login.php");
 }
 
-$pesan = query("SELECT sewa.idsewa,user.nama_lengkap,sewa.tgl_pesan,sewa.jmulai,sewa.lama,sewa.tot,bayar.bukti,bayar.konfirmasi
-FROM sewa
-JOIN user ON sewa.iduser = user.id_user
-JOIN bayar ON sewa.idsewa = bayar.idsewa
+$pesan = query("SELECT sewa_212279.212279_id_sewa,user_212279.212279_nama_lengkap,sewa_212279.212279_tanggal_pesan,sewa_212279.212279_jam_mulai,sewa_212279.212279_lama_sewa,sewa_212279.212279_total,bayar_212279.212279_bukti,bayar_212279.212279_konfirmasi
+FROM sewa_212279
+JOIN user_212279 ON sewa_212279.212279_id_user = user_212279.212279_id_user
+JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa
 ");
 
 ?>
@@ -57,13 +57,13 @@ JOIN bayar ON sewa.idsewa = bayar.idsewa
             <?php foreach ($pesan as $row) : ?>
               <tr>
                 <td><?= $i++; ?></td>
-                <td><?= $row["nama_lengkap"]; ?></td>
-                <td><?= $row["tgl_pesan"]; ?></td>
-                <td><?= $row["jmulai"]; ?></td>
-                <td><?= $row["lama"]; ?></td>
-                <td><?= $row["tot"]; ?></td>
-                <td><img src="../img/<?= $row["bukti"]; ?>" width="100" height="100"></td>
-                <td><?= $row["konfirmasi"]; ?></td>
+                <td><?= $row["212279_nama_lengkap"]; ?></td>
+<td><?= $row["212279_tanggal_pesan"];?></td>
+ <td><?= $row["212279_jam_mulai"]; ?></td>
+                <td><?= $row["212279_lama_sewa"]; ?></td>
+                <td><?= $row["212279_total"]; ?></td>
+                <td><img src="../img/<?= $row["212279_bukti"]; ?>" width="100" height="100"></td>
+                <td><?= $row["212279_konfirmasi"]; ?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>

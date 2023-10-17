@@ -6,9 +6,9 @@ if ($role !== 'Admin') {
   header("location:../login.php");
 }
 
-$lapangan = query("SELECT COUNT(idlap) AS jml_lapangan FROM lapangan")[0];
-$pesanan = query("SELECT COUNT(idbayar) AS jml_sewa FROM bayar")[0];
-$user = query("SELECT COUNT(id_user) AS jml_user FROM user")[0];
+$lapangan = query("SELECT COUNT(212279_id_lapangan) AS jml_lapangan FROM lapangan_212279")[0];
+$pesanan = query("SELECT COUNT(212279_id_bayar) AS jml_sewa FROM bayar_212279")[0];
+$user = query("SELECT COUNT(212279_id_user) AS jml_user FROM user_212279")[0];
 
 ?>
 <!DOCTYPE html>

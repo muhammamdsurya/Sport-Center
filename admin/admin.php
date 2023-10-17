@@ -8,7 +8,7 @@ if ($role !== 'Admin') {
 
 // Pagination
 $jmlHalamanPerData = 5;
-$jumlahData = count(query("SELECT * FROM admin"));
+$jumlahData = count(query("SELECT * FROM admin_212279"));
 $jmlHalaman = ceil($jumlahData / $jmlHalamanPerData);
 
 if (isset($_GET["halaman"])) {
@@ -19,7 +19,7 @@ if (isset($_GET["halaman"])) {
 
 $awalData = ($jmlHalamanPerData * $halamanAktif) - $jmlHalamanPerData;
 
-$admin = query("SELECT * FROM admin LIMIT $awalData, $jmlHalamanPerData");
+$admin = query("SELECT * FROM admin_212279 LIMIT $awalData, $jmlHalamanPerData");
 
 
 if (isset($_POST["simpan"])) {
@@ -106,8 +106,8 @@ if (isset($_POST["edit"])) {
                     <div class="col">
                       <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Nama Lengkap</label>
-                        <input type="text" name="nama" class="form-control" id="exampleInputPassword1">
-                      </div>
+                        <input type="text" name="nama" class="form-control" id="212279_exampleInputPassword1">
+                     </div>
                       <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">No Hp</label>
                         <input type="number" name="hp" class="form-control" id="exampleInputPassword1">
@@ -144,25 +144,24 @@ if (isset($_POST["edit"])) {
             <?php foreach ($admin as $row) : ?>
               <tr>
                 <th scope="row"><?= $i++; ?></th>
-                <td><?= $row["username"]; ?></td>
-                <td><?= $row["nama"]; ?></td>
-                <td><?= $row["email"]; ?></td>
-                <td><?= $row["phone"]; ?> </td>
+                <td><?= $row["212279_username"]; ?></td>
+                <td><?= $row["212279_nama"]; ?></td>
+                <td><?= $row["212279_email"]; ?></td>
+                <td><?= $row["212279_no_handphone"]; ?> </td>
                 <td>
-                  <button class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#editModal<?= $row["id_user"]; ?>">Edit</button>
-                  <a href="./controller/hapusAdmin.php?id=<?= $row["id_user"]; ?>" class="btn btn-danger">Hapus</a>
+                  <button class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#editModal<?= $row["212279_id_user"]; ?>">Edit</button>
+                  <a href="./controller/hapusAdmin.php?id=<?= $row["212279_id_user"]; ?>" class="btn btn-danger">Hapus</a>
                 </td>
 
                 <!-- Edit Modal -->
-                <div class="modal fade" id="editModal<?= $row["id_user"]; ?>" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editModal<?= $row["212279_id_user"]; ?>" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="tambahModalLabel">Edit Admin <?= $row["nama"]; ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="tambahModalLabel">Edit Admin <?= $row["212279_nama"]; ?></h5>
                       </div>
                       <form action="" method="post">
-                        <input type="hidden" name="id" class="form-control" id="exampleInputPassword1" value="<?= $row["id_user"]; ?>>">
+                        <input type="hidden" name="id" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_id_user"]; ?>>">
                         <div class="modal-body">
                           <!-- konten form modal -->
                           <div class="row justify-content-center align-items-center">
@@ -172,26 +171,26 @@ if (isset($_POST["edit"])) {
                             <div class="col">
                               <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Username</label>
-                                <input type="text" name="username" class="form-control" id="exampleInputPassword1" value="<?= $row["username"]; ?>">
+                                <input type="text" name="username" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_username"]; ?>">
                               </div>
                               <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="<?= $row["password"]; ?>">
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_password"]; ?>">
                               </div>
                             </div>
                             <div class="col">
                               <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Nama Lengkap</label>
-                                <input type="nama" name="nama" class="form-control" id="exampleInputPassword1" value="<?= $row["nama"]; ?>">
+                                <input type="212279_nama" name="nama" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_nama"]; ?>">
                               </div>
-                              <div class="mb-3">
+                              <d212279_no_handiv class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" id="exampleInputPassword1" value="<?= $row["email"]; ?>">
+                                <input type="email" name="email" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_email"]; ?>">
                               </div>
                             </div>
                             <div class="mb-3">
                               <label for="exampleInputPassword1" class="form-label">No Hp</label>
-                              <input type="number" name="hp" class="form-control" id="exampleInputPassword1" value="<?= $row["phone"]; ?>">
+                              <input type="number" name="hp" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_no_handphone"]; ?>">
                             </div>
                           </div>
                           <div class="modal-footer">

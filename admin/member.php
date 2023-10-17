@@ -9,7 +9,7 @@ if ($role !== 'Admin') {
 
 // Pagination
 $jmlHalamanPerData = 5;
-$jumlahData = count(query("SELECT * FROM user"));
+$jumlahData = count(query("SELECT * FROM user_212279"));
 $jmlHalaman = ceil($jumlahData / $jmlHalamanPerData);
 
 if (isset($_GET["halaman"])) {
@@ -20,7 +20,7 @@ if (isset($_GET["halaman"])) {
 
 $awalData = ($jmlHalamanPerData * $halamanAktif) - $jmlHalamanPerData;
 
-$member = query("SELECT * FROM user LIMIT $awalData, $jmlHalamanPerData");
+$member = query("SELECT * FROM user_212279 LIMIT $awalData, $jmlHalamanPerData");
 
 ?>
 
@@ -74,12 +74,12 @@ $member = query("SELECT * FROM user LIMIT $awalData, $jmlHalamanPerData");
               <?php foreach ($member as $row) : ?>
                 <tr>
                   <th scope="row"><?= $i; ?></th>
-                  <td><?= $row["nama_lengkap"]; ?></td>
-                  <td><?= $row["jenis_kelamin"]; ?></td>
-                  <td><?= $row["email"]; ?></td>
-                  <td><?= $row["hp"]; ?></td>
+                  <td><?= $row["212279_nama_lengkap"]; ?></td>
+                  <td><?= $row["212279_jenis_kelamin"]; ?></td>
+                  <td><?= $row["212279_email"]; ?></td>
+                  <td><?= $row["212279_no_handphone"]; ?></td>
                   <td>
-                    <a href="./controller/hapusMember.php?id=<?= $row["id_user"]; ?>" class="btn btn-danger">Hapus</a>
+                    <a href="./controller/hapusMember.php?id=<?= $row["212279_id_user"]; ?>" class="btn btn-danger">Hapus</a>
                   </td>
                 </tr>
                 <?php $i++; ?>

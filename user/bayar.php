@@ -10,11 +10,11 @@ $id_user = $_SESSION["id_user"];
 
 // Pagination
 $jmlHalamanPerData = 5;
-$jumlahData = count(query("SELECT sewa.*, lapangan.nm, bayar.bukti, bayar.konfirmasi
-FROM sewa
-JOIN lapangan ON sewa.idlap = lapangan.idlap
-left JOIN bayar ON sewa.idsewa = bayar.idsewa
-WHERE sewa.iduser = '$id_user'"));
+$jumlahData = count(query("SELECT sewa_212279.*, lapangan_212279.212279_nama, bayar_212279.212279_bukti, bayar_212279.212279_konfirmasi
+FROM sewa_212279
+JOIN lapangan_212279 ON sewa_212279.212279_id_lapangan = lapangan_212279.212279_id_lapangan
+left JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa
+WHERE sewa_212279.212279_id_user = '$id_user'"));
 $jmlHalaman = ceil($jumlahData / $jmlHalamanPerData);
 
 if (isset($_GET["halaman"])) {
@@ -25,14 +25,14 @@ if (isset($_GET["halaman"])) {
 
 $awalData = ($jmlHalamanPerData * $halamanAktif) - $jmlHalamanPerData;
 
-$sewa = query("SELECT sewa.*, lapangan.nm, bayar.bukti, bayar.konfirmasi
-FROM sewa
-JOIN lapangan ON sewa.idlap = lapangan.idlap
-left JOIN bayar ON sewa.idsewa = bayar.idsewa
-WHERE sewa.iduser = '$id_user' LIMIT $awalData, $jmlHalamanPerData");
+$sewa_212279 = query("SELECT sewa_212279.*, lapangan_212279.212279_nama, bayar_212279.212279_bukti, bayar_212279.212279_konfirmasi
+FROM sewa_212279
+JOIN lapangan_212279 ON sewa_212279.212279_id_lapangan = lapangan_212279.212279_id_lapangan
+left JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa
+WHERE sewa_212279.212279_id_user = '$id_user' LIMIT $awalData, $jmlHalamanPerData");
 // Pagination
 
-$profil = query("SELECT * FROM user WHERE id_user = '$id_user'")[0];
+$profil = query("SELECT * FROM user_212279 WHERE 212279_id_user = '$id_user'")[0];
 
 
 if (isset($_POST["simpan"])) {
@@ -48,7 +48,7 @@ if (isset($_POST["simpan"])) {
 }
 
 
-if (isset($_POST["bayar"])) {
+if (isset($_POST["bayar_212279"])) {
   if (bayar($_POST) > 0) {
     echo "<script>
           alert('Berhasil Di Bayar!');
@@ -126,14 +126,14 @@ if (isset($_POST["bayar"])) {
           <div class="modal-body">
             <div class="row">
               <div class="col-4 my-5">
-                <img src="../img/<?= $profil["foto"]; ?>" alt="Foto Profil" class="img-fluid ">
+                <img src="../img/<?= $profil["212279_foto"]; ?>" alt="Foto Profil" class="img-fluid ">
               </div>
               <div class="col-8">
-                <h5 class="mb-3"><?= $profil["nama_lengkap"]; ?></h5>
-                <p><?= $profil["jenis_kelamin"]; ?></p>
-                <p><?= $profil["email"]; ?></p>
-                <p><?= $profil["hp"]; ?></p>
-                <p><?= $profil["alamat"]; ?></p>
+                <h5 class="mb-3"><?= $profil["212279_nama_lengkap"]; ?></h5>
+                <p><?= $profil["212279_jenis_kelamin"]; ?></p>
+                <p><?= $profil["212279_email"]; ?></p>
+                <p><?= $profil["212279_no_handphone"]; ?></p>
+                <p><?= $profil["212279_alamat"]; ?></p>
                 <a href="../logout.php" class="btn btn-danger">Logout</a>
                 <a href="" data-bs-toggle="modal" data-bs-target="#editProfilModal" class="btn btn-inti">Edit Profil</a>
               </div>
@@ -154,42 +154,42 @@ if (isset($_POST["bayar"])) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form action="" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="fotoLama" class="form-control" id="exampleInputPassword1" value="<?= $profil["foto"]; ?>">
+          <input type="hidden" name="fotoLama" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_foto"]; ?>">
           <div class="modal-body">
             <div class="row justify-content-center align-items-center">
               <div class="mb-3">
-                <img src="../img/<?= $profil["foto"]; ?>" alt="Foto Profil" class="img-fluid ">
+                <img src="../img/<?= $profil["212279_foto"]; ?>" alt="Foto Profil" class="img-fluid ">
               </div>
               <div class="col">
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Nama Lengkap</label>
-                  <input type="text" name="nama_lengkap" class="form-control" id="exampleInputPassword1" value="<?= $profil["nama_lengkap"]; ?>">
+                  <input type="text" name="212279_nama_lengkap" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_nama_lengkap"]; ?>">
                 </div>
                 <div class="mb-3">
-                  <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                  <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
-                    <option value="Laki-laki" <?php if ($profil['jenis_kelamin'] == 'Laki-laki') echo 'selected'; ?>>Laki-laki</option>
-                    <option value="Perempuan" <?php if ($profil['jenis_kelamin'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
+                  <label for="212279_jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                  <select class="form-control" id="212279_jenis_kelamin" name="212279_jenis_kelamin" required>
+                    <option value="Laki-laki" <?php if ($profil['212279_jenis_kelamin'] == 'Laki-laki') echo 'selected'; ?>>Laki-laki</option>
+                    <option value="Perempuan" <?if ($profil['212279_jenis_kelamin'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
                   </select>
-                </div>
+              </div>
               </div>
               <div class="col">
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">No Telp</label>
-                  <input type="number" name="hp" class="form-control" id="exampleInputPassword1" value="<?= $profil["hp"]; ?>">
+                  <input type="number" name="hp" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_no_handphone"]; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Email</label>
-                  <input type="email" name="email" class="form-control" id="exampleInputPassword1" value="<?= $profil["email"]; ?>">
+                  <input type="email" name="email" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_email"]; ?>">
                 </div>
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">alamat</label>
-                <input type="text" name="alamat" class="form-control" id="exampleInputPassword1" value="<?= $profil["alamat"]; ?>">
+                <input type="text" name="alamat" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_alamat"]; ?>">
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Foto : </label>
-                <input type="file" name="foto" class="form-control" id="exampleInputPassword1">
+                <input type="file" name="212279_foto" class="form-control" id="exampleInputPassword1">
               </div>
             </div>
           </div>
@@ -202,7 +202,7 @@ if (isset($_POST["bayar"])) {
     </div>
   </div>
 
-  <section class="lapangan mb-5" id="lapangan">
+  <section class="lapangan_212279 mb-5" id="lapangan_212279">
     <div class="container-fluid">
 
       <h2 class="text-head"><span>Pembayaran</span> Lapangan </h2>
@@ -222,66 +222,66 @@ if (isset($_POST["bayar"])) {
           </thead>
           <tbody>
             <?php $i = 1; ?>
-            <?php foreach ($sewa as $row) : ?>
+            <?php foreach ($sewa_212279 as $row) : ?>
               <tr>
                 <th scope="row"><?= $i++; ?></th>
-                <td><?= $row["tgl_pesan"] ?></td>
-                <td><?= $row["nm"] ?></td>
-                <td><?= $row["jmulai"] ?></td>
-                <td><?= $row["lama"] ?></td>
-                <td><?= $row["jhabis"] ?></td>
-                <td><?= $row["tot"] ?></td>
+                <td><?= $row["212279_tanggal_pesan"] ?></td>
+                <td><?= $row["212279_nama"] ?></td>
+                <td><?= $row["212279_jam_mulai"] ?></td>
+                <td><?= $row["212279_lama_sewa"] ?></td>
+                <td><?= $row["212279_jam_habis"] ?></td>
+                <td><?= $row["212279_total"] ?></td>
                 <td>
                   <?php
-                  $idsewa = $row["idsewa"];
-                  if ($row["konfirmasi"] == "Sudah Bayar" || $row["konfirmasi"] == "Terkonfirmasi") {
+                  $id_sewa = $row["212279_id_sewa"];
+                  if ($row["212279_konfirmasi"] == "Sudah Bayar" || $row["212279_konfirmasi"] == "Terkonfirmasi") {
                     // tampilkan tombol Bayar dan Hapus
-                    echo '<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal' . $row["idsewa"] . '">Detail</button> ';
+                    echo '<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal' . $row["212279_id_sewa"] . '">Detail</button> ';
                   } else {
                     // tampilkan tombol Detail
-                    echo '<button type="button" class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#bayarModal' . $row["idsewa"] . '">Bayar</button>
-<a href="" data-bs-toggle="modal" data-bs-target="#hapusModal' . $row["idsewa"] . '" class="btn btn-danger">Hapus</a>';
+                    echo '<button type="button" class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#bayarModal' . $row["212279_id_sewa"] . '">Bayar</button>
+<a href="" data-bs-toggle="modal" data-bs-target="#hapusModal' . $row["212279_id_sewa"] . '" class="btn btn-danger">Hapus</a>';
                   }
                   ?>
 
                   <!-- Modal Bayar -->
-                  <div class="modal fade" id="bayarModal<?= $row["idsewa"] ?>" tabindex="-1" role="dialog" aria-labelledby="bayarModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="bayarModal<?= $row["212279_id_sewa"] ?>" tabindex="-1" role="dialog" aria-labelledby="bayarModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title">Bayar Lapangan <?= $row["nm"]; ?></h5>
+                          <h5 class="modal-title">Bayar Lapangan <?= $row["212279_nama"]; ?></h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="" method="post" enctype="multipart/form-data">
-                          <input type="hidden" name="idsewa" value="<?= $row["idsewa"]; ?>">
+                          <input type="hidden" name="212279_id_sewa" value="<?= $row["212279_id_sewa"]; ?>">
                           <div class="modal-body">
                             <!-- konten form modal -->
                             <div class="row justify-content-center align-items-center">
                               <div class="col">
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Jam Main</label>
-                                  <input type="datetime-local" name="tgl_main" class="form-control" id="exampleInputPassword1" value="<?= $row["jmulai"]; ?>" disabled>
+                                  <input type="datetime-local" name="tgl_main" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_jam_mulai"]; ?>" disabled>
                                 </div>
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Jam Habis</label>
-                                  <input type="datetime-local" name="jam_habis" class="form-control" id="exampleInputPassword1" value="<?= $row["jhabis"]; ?>" disabled>
+                                  <input type="datetime-local" name="jam_habis" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_jam_habis"]; ?>" disabled>
                                 </div>
                               </div>
                               <div class="col">
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Lama Main</label>
-                                  <input type="text" name="jam_mulai" class="form-control" id="exampleInputPassword1" value="<?= $row["lama"]; ?>" disabled>
+                                  <input type="text" name="jam_mulai" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_lama_sewa"]; ?>" disabled>
                                 </div>
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Harga</label>
-                                  <input type="number" name="harga" class="form-control" id="exampleInputPassword1" value="<?= $row["harga"]; ?>" disabled>
+                                  <input type="number" name="212279_harga" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_harga"]; ?>" disabled>
                                 </div>
                               </div>
                               <div class="input-group ">
                                 <div class="input-group-prepend border border-danger">
                                   <span class="input-group-text">Total</span>
                                 </div>
-                                <input type="number" name="total" class="form-control border border-danger" id="exampleInputPassword1" value="<?= $row["tot"]; ?>" disabled>
+                                <input type="number" name="total" class="form-control border border-danger" id="exampleInputPassword1" value="<?= $row["212279_total"]; ?>" disabled>
                               </div>
                               <div class="mt-3">
                                 <label for="exampleInputPassword1" class="form-label">Transfer ke : BRI 0892322132 a/n Sport Center</label>
@@ -296,7 +296,7 @@ if (isset($_POST["bayar"])) {
                             <h6 class=" text-center border border-danger">Status : Belum Bayar</h6>
                           </div>
                           <div class="modal-footer">
-                            <button type="submit" class="btn btn-inti" name="bayar" id="bayar">Bayar</button>
+                            <button type="submit" class="btn btn-inti" name="bayar_212279" id="bayar_212279">Bayar</button>
                           </div>
                         </form>
                       </div>
@@ -305,11 +305,11 @@ if (isset($_POST["bayar"])) {
                   <!-- End Modal Bayar -->
 
                   <!-- Modal Detail -->
-                  <div class="modal fade" id="detailModal<?= $row["idsewa"] ?>" tabindex="-1" role="dialog" aria-labelledby="bayarModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="detailModal<?= $row["212279_id_sewa"] ?>" tabindex="-1" role="dialog" aria-labelledby="bayarModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title">Detail Pembayaran Lapangan <?= $row["nm"]; ?></h5>
+                          <h5 class="modal-title">Detail Pembayaran Lapangan <?= $row["212279_nama"]; ?></h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="" method="post">
@@ -317,38 +317,38 @@ if (isset($_POST["bayar"])) {
                             <!-- konten form modal -->
                             <div class="row justify-content-center align-items-center">
                               <div class="mb-3">
-                                <img src="../img/<?= $row["bukti"]; ?>" alt="gambar lapangan" class="img-fluid">
+                                <img src="../img/<?= $row["212279_bukti"]; ?>" alt="gambar lapangan_212279" class="img-fluid">
                               </div>
                               <div class="col">
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Jam Main</label>
-                                  <input type="datetime-local" name="tgl_main" class="form-control" id="exampleInputPassword1" value="<?= $row["jmulai"]; ?>" disabled>
+                                  <input type="datetime-local" name="tgl_main" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_jam_mulai"]; ?>" disabled>
                                 </div>
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Jam Habis</label>
-                                  <input type="datetime-local" name="jam_habis" class="form-control" id="exampleInputPassword1" value="<?= $row["jhabis"]; ?>" disabled>
+                                  <input type="datetime-local" name="jam_habis" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_jam_habis"]; ?>" disabled>
                                 </div>
                               </div>
                               <div class="col">
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Lama Main</label>
-                                  <input type="time" name="jam_mulai" class="form-control" id="exampleInputPassword1" value="<?= $row["lama"]; ?>" disabled>
+                                  <input type="time" name="jam_mulai" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_lama_sewa"]; ?>" disabled>
                                 </div>
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Harga</label>
-                                  <input type="number" name="harga" class="form-control" id="exampleInputPassword1" value="<?= $row["harga"]; ?>" disabled>
+                                  <input type="number" name="212279_harga" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_harga"]; ?>" disabled>
                                 </div>
                               </div>
                               <div class="input-group ">
                                 <div class="input-group-prepend">
                                   <span class="input-group-text">Total</span>
                                 </div>
-                                <input type="number" name="total" class="form-control " id="exampleInputPassword1" value="<?= $row["tot"]; ?>" disabled>
+                                <input type="number" name="total" class="form-control " id="exampleInputPassword1" value="<?= $row["212279_total"]; ?>" disabled>
                               </div>
                             </div>
                           </div>
                           <div class="mt-3 mx-3">
-                            <h6 class="text-center border border-danger">Status : <?= $row["konfirmasi"]; ?></h6>
+                            <h6 class="text-center border border-danger">Status : <?= $row["212279_konfirmasi"]; ?></h6>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -360,7 +360,7 @@ if (isset($_POST["bayar"])) {
                   <!-- End Modal Detail -->
 
                   <!-- Modal Hapus -->
-                  <div class="modal fade" id="hapusModal<?= $row["idsewa"]; ?>" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="hapusModal<?= $row["212279_id_sewa"]; ?>" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -371,7 +371,7 @@ if (isset($_POST["bayar"])) {
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                          <a href="./controller/hapus.php?id=<?= $row["idsewa"] ?>" class="btn btn-danger">Hapus</a>
+                          <a href="./controller/hapus.php?id=<?= $row["212279_id_sewa"] ?>" class="btn btn-danger">Hapus</a>
                         </div>
                       </div>
                     </div>

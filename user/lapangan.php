@@ -8,8 +8,8 @@ if ($role !== 'User') {
 
 $id = $_SESSION["id_user"];
 
-$lapangan = query("SELECT * FROM lapangan");
-$profil = query("SELECT * FROM user WHERE id_user = '$id'")[0];
+$lapangan = query("SELECT * FROM lapangan_212279");
+$profil = query("SELECT * FROM user_212279 WHERE 212279_id_user = '$id'")[0];
 
 if (isset($_POST["simpan"])) {
   if (edit($_POST) > 0) {
@@ -103,14 +103,14 @@ if (isset($_POST["pesan"])) {
           <div class="modal-body">
             <div class="row">
               <div class="col-4 my-5">
-                <img src="../img/<?= $profil["foto"]; ?>" alt="Foto Profil" class="img-fluid ">
+                <img src="../img/<?= $profil["212279_foto"]; ?>" alt="Foto Profil" class="img-fluid ">
               </div>
               <div class="col-8">
-                <h5 class="mb-3"><?= $profil["nama_lengkap"]; ?></h5>
-                <p><?= $profil["jenis_kelamin"]; ?></p>
-                <p><?= $profil["email"]; ?></p>
-                <p><?= $profil["hp"]; ?></p>
-                <p><?= $profil["alamat"]; ?></p>
+                <h5 class="mb-3"><?= $profil["212279_nama_lengkap"]; ?></h5>
+                <p><?= $profil["212279_jenis_kelamin"]; ?></p>
+                <p><?= $profil["212279_email"]; ?></p>
+                <p><?= $profil["212279_no_handphone"]; ?></p>
+                <p><?= $profil["212279_alamat"]; ?></p>
                 <a href="../logout.php" class="btn btn-danger">Logout</a>
                 <a href="" data-bs-toggle="modal" data-bs-target="#editProfilModal" class="btn btn-inti">Edit Profil</a>
               </div>
@@ -131,38 +131,38 @@ if (isset($_POST["pesan"])) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form action="" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="fotoLama" class="form-control" id="exampleInputPassword1" value="<?= $profil["foto"]; ?>">
+          <input type="hidden" name="fotoLama" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_foto"]; ?>">
           <div class="modal-body">
             <div class="row justify-content-center align-items-center">
               <div class="mb-3">
-                <img src="../img/<?= $profil["foto"]; ?>" alt="Foto Profil" class="img-fluid ">
+                <img src="../img/<?= $profil["212279_foto"]; ?>" alt="Foto Profil" class="img-fluid ">
               </div>
               <div class="col">
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Nama Lengkap</label>
-                  <input type="text" name="nama_lengkap" class="form-control" id="exampleInputPassword1" value="<?= $profil["nama_lengkap"]; ?>">
+                  <input type="text" name="nama_lengkap" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_nama_lengkap"]; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                   <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
-                    <option value="Laki-laki" <?php if ($profil['jenis_kelamin'] == 'Laki-laki') echo 'selected'; ?>>Laki-laki</option>
-                    <option value="Perempuan" <?php if ($profil['jenis_kelamin'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
+                    <option value="Laki-laki" <?php if ($profil['212279_jenis_kelamin'] == 'Laki-laki') echo 'selected'; ?>>Laki-laki</option>
+                    <option value="Perempuan" <?php if ($profil['212279_jenis_kelamin'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
                   </select>
                 </div>
               </div>
               <div class="col">
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">No Telp</label>
-                  <input type="number" name="hp" class="form-control" id="exampleInputPassword1" value="<?= $profil["hp"]; ?>">
+                  <input type="number" name="hp" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_no_handphone"]; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Email</label>
-                  <input type="email" name="email" class="form-control" id="exampleInputPassword1" value="<?= $profil["email"]; ?>">
+                  <input type="email" name="email" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_email"]; ?>">
                 </div>
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">alamat</label>
-                <input type="text" name="alamat" class="form-control" id="exampleInputPassword1" value="<?= $profil["alamat"]; ?>">
+                <input type="text" name="alamat" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_alamat"]; ?>">
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Foto : </label>
@@ -188,23 +188,23 @@ if (isset($_POST["pesan"])) {
           <?php foreach ($lapangan as $row) : ?>
             <div class="col">
               <div class="card">
-                <img src="../img/<?= $row["foto"]; ?>" alt="gambar lapangan" class="card-img-top">
+                <img src="../img/<?= $row["212279_foto"]; ?>" alt="gambar lapangan" class="card-img-top">
                 <div class="card-body text-center">
-                  <h5 class="card-title"><?= $row["nm"]; ?></h5>
-                  <p class="card-text"><?= $row["ket"]; ?></p>
-                  <p class="card-price"><?= $row["harga"]; ?></p>
-                  <a href="jadwal.php?id=<?= $row["idlap"]; ?>" type="button" class="btn btn-secondary">Jadwal</a>
-                  <button type="button" class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#pesanModal<?= $row["idlap"]; ?>">Pesan</button>
+                  <h5 class="card-title"><?= $row["212279_nama"]; ?></h5>
+                  <p class="card-text"><?= $row["212279_keterangan"]; ?></p>
+                  <p class="card-price"><?= $row["212279_harga"]; ?></p>
+                  <a href="jadwal.php?id=<?= $row["212279_id_lapangan"]; ?>" type="button" class="btn btn-secondary">Jadwal</a>
+                  <button type="button" class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#pesanModal<?= $row["212279_id_lapangan"]; ?>">Pesan</button>
                 </div>
               </div>
             </div>
 
             <!-- Modal Pesan -->
-            <div class="modal fade" id="pesanModal<?= $row["idlap"]; ?>" tabindex="-1" aria-labelledby="pesanModalLabel<?= $row["idlap"]; ?>" aria-hidden="true">
+            <div class="modal fade" id="pesanModal<?= $row["212279_id_lapangan"]; ?>" tabindex="-1" aria-labelledby="pesanModalLabel<?= $row["212279_id_lapangan"]; ?>" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="pesanModalLabel<?= $row["idlap"]; ?>">Pesan Lapangan <?= $row["nm"]; ?></h5>
+                    <h5 class="modal-title" id="pesanModalLabel<?= $row["212279_id_lapangan"]; ?>">Pesan Lapangan <?= $row["212279_nama"]; ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <form action="" method="post">
@@ -212,20 +212,20 @@ if (isset($_POST["pesan"])) {
                       <!-- konten form modal -->
                       <div class="row justify-content-center align-items-center">
                         <div class="mb-3">
-                          <img src="../img/<?= $row["foto"]; ?>" alt="gambar lapangan" class="img-fluid">
+                          <img src="../img/<?= $row["212279_foto"]; ?>" alt="gambar lapangan" class="img-fluid">
                         </div>
                         <div class="text-center">
-                          <h6 name="harga">Harga : <?= $row["harga"]; ?></h6>
+                          <h6 name="harga">Harga : <?= $row["212279_harga"]; ?></h6>
                         </div>
                         <div class="col">
-                          <input type="hidden" name="id_lpg" class="form-control" id="exampleInputPassword1" value="<?= $row["idlap"]; ?>">
+                          <input type="hidden" name="id_lpg" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_id_lapangan"]; ?>">
                           <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Tanggal Main</label>
                             <input type="datetime-local" name="tgl_main" class="form-control" id="exampleInputPassword1">
                           </div>
                         </div>
                         <div class="col">
-                          <input type="hidden" name="harga" class="form-control" id="exampleInputPassword1" value="<?= $row["harga"]; ?>">
+                          <input type="hidden" name="harga" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_harga"]; ?>">
                           <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Lama Main</label>
                             <input type="time" name="jam_mulai" class="form-control" id="exampleInputPassword1">

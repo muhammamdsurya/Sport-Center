@@ -4,7 +4,7 @@ require "functions.php";
 
 $id_user = $_SESSION["id_user"];
 
-$profil = query("SELECT * FROM user WHERE id_user = '$id_user'")[0];
+$profil = query("SELECT * FROM user_212279 WHERE 212279_id_user = '$id_user'")[0];
 
 
 if (isset($_POST["simpan"])) {
@@ -99,14 +99,14 @@ if (isset($_POST["simpan"])) {
           <div class="modal-body">
             <div class="row">
               <div class="col-4 my-5">
-                <img src="img/<?= $profil["foto"]; ?>" alt="Foto Profil" class="img-fluid ">
+                <img src="img/<?= $profil["212279_foto"]; ?>" alt="Foto Profil" class="img-fluid ">
               </div>
               <div class="col-8">
-                <h5 class="mb-3"><?= $profil["nama_lengkap"]; ?></h5>
-                <p><?= $profil["jenis_kelamin"]; ?></p>
-                <p><?= $profil["email"]; ?></p>
-                <p><?= $profil["hp"]; ?></p>
-                <p><?= $profil["alamat"]; ?></p>
+                <h5 class="mb-3"><?= $profil["212279_nama_lengkap"]; ?></h5>
+                <p><?= $profil["212279_jenis_kelamin"]; ?></p>
+                <p><?= $profil["212279_email"]; ?></p>
+                <p><?= $profil["212279_no_handphone"]; ?></p>
+                <p><?= $profil["212279_alamat"]; ?></p>
                 <a href="logout.php" class="btn btn-danger">Logout</a>
                 <a href="" data-bs-toggle="modal" data-bs-target="#editProfilModal" class="btn btn-inti">Edit Profil</a>
               </div>
@@ -127,16 +127,16 @@ if (isset($_POST["simpan"])) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form action="" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="fotoLama" class="form-control" id="exampleInputPassword1" value="<?= $profil["foto"]; ?>">
+          <input type="hidden" name="fotoLama" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_foto"]; ?>">
           <div class="modal-body">
             <div class="row justify-content-center align-items-center">
               <div class="mb-3">
-                <img src="img/<?= $profil["foto"]; ?>" alt="Foto Profil" class="img-fluid ">
+                <img src="img/<?= $profil["212279_foto"]; ?>" alt="Foto Profil" class="img-fluid ">
               </div>
               <div class="col">
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Nama Lengkap</label>
-                  <input type="text" name="nama_lengkap" class="form-control" id="exampleInputPassword1" value="<?= $profil["nama_lengkap"]; ?>">
+                  <input type="text" name="212279_nama_lengkap" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_nama_lengkap"]; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
@@ -148,21 +148,21 @@ if (isset($_POST["simpan"])) {
               </div>
               <div class="col">
                 <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">No Telp</label>
-                  <input type="number" name="hp" class="form-control" id="exampleInputPassword1" value="<?= $profil["hp"]; ?>">
+                  <label for=212279_" class="form-label">No Telp</label>
+                  <input type="number" name="212279_no_handphone" 212279_class"form-control" id="exampleInputPassword1" value="<?= $profil["212279_no_handphone"]; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Email</label>
-                  <input type="email" name="email" class="form-control" id="exampleInputPassword1" value="<?= $profil["email"]; ?>">
+                  <input type="email" name="email" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_email"]; ?>">
                 </div>
               </div>
               <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">alamat</label>
-                <input type="text" name="alamat" class="form-control" id="exampleInputPassword1" value="<?= $profil["alamat"]; ?>">
+                <label for="exampleInputPassword1" class="form-label">212279_alamat</label>
+                <input type="text" name="212279_alamat" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_alamat"]; ?>">
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Foto : </label>
-                <input type="file" name="foto" class="form-control" id="exampleInputPassword1">
+                <input type="file" name="212279_foto" class="form-control" id="exampleInputPassword1">
               </div>
             </div>
           </div>

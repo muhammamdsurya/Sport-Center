@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "db_futsal");
+$conn = mysqli_connect("localhost", "root", "", "dbfutsal");
 
 function query($query)
 {
@@ -16,7 +16,7 @@ function query($query)
 function hapusMember($id)
 {
   global $conn;
-  mysqli_query($conn, "DELETE FROM user WHERE id_user = $id");
+  mysqli_query($conn, "DELETE FROM user_212279 WHERE 212279_id_user = $id");
 
   return mysqli_affected_rows($conn);
 }
@@ -24,7 +24,7 @@ function hapusMember($id)
 function hapusLpg($id)
 {
   global $conn;
-  mysqli_query($conn, "DELETE FROM lapangan WHERE idlap = $id");
+  mysqli_query($conn, "DELETE FROM lapangan_212279 WHERE 212279_id_lapangan = $id");
 
   return mysqli_affected_rows($conn);
 }
@@ -32,7 +32,7 @@ function hapusLpg($id)
 function hapusAdmin($id)
 {
   global $conn;
-  mysqli_query($conn, "DELETE FROM admin WHERE id_user = $id");
+  mysqli_query($conn, "DELETE FROM admin_212279 WHERE 212279_id_user = $id");
 
   return mysqli_affected_rows($conn);
 }
@@ -40,7 +40,7 @@ function hapusAdmin($id)
 function hapusPesan($id)
 {
   global $conn;
-  mysqli_query($conn, "DELETE FROM sewa WHERE idsewa = $id");
+  mysqli_query($conn, "DELETE FROM sewa_212279 WHERE 212279_id_sewa = $id");
 
   return mysqli_affected_rows($conn);
 }
@@ -52,7 +52,7 @@ function daftar($data)
   $username = strtolower(stripslashes($data["email"]));
   $password = $data["password"];
   $nama = $data["nama"];
-  $hp = $data["hp"];
+  $no_handphone = $data["hp"];
   $alamat = $data["alamat"];
   $gender = $data["gender"];
   //Upload Gambar
@@ -61,7 +61,7 @@ function daftar($data)
     return false;
   }
 
-  $result = mysqli_query($conn, "SELECT email FROM user WHERE email = '$username'");
+  $result = mysqli_query($conn, "SELECT 212279_email FROM user_212279 WHERE 212279_email = '$username'");
 
   if (mysqli_fetch_assoc($result)) {
     echo "<script>
@@ -69,7 +69,7 @@ function daftar($data)
         </script>";
     return false;
   }
-  mysqli_query($conn, "INSERT INTO user (email,password,hp,jenis_kelamin,nama_lengkap,alamat,foto) VALUES ('$username','$password','$hp','$gender','$nama','$alamat','$upload')");
+  mysqli_query($conn, "INSERT INTO user_212279 (212279_email,212279_password,212279_no_handphone,212279_jenis_kelamin,212279_nama_lengkap,212279_alamat,212279_foto) VALUES ('$username','$password','$no_handphone','$gender','$nama','$alamat','$upload')");
   return mysqli_affected_rows($conn);
 }
 
@@ -80,20 +80,24 @@ function edit($data)
   $userid = $_SESSION["id_user"];
   $username = strtolower(stripslashes($data["email"]));
   $nama = $data["nama_lengkap"];
-  $hp = $data["hp"];
+  $no_handphone = $data["hp"];
   $gender = $data["jenis_kelamin"];
-  //Upload Gambar
-  $upload = upload();
-  if (!$upload) {
-    return false;
+  $gambar = $data["foto"];
+  $gambarLama = $data["fotoLama"];
+ 
+  // Cek apakah User pilih gambar baru
+  if ($_FILES["foto"]["error"] === 4) {
+    $gambar = $gambarLama;
+  } else {
+    $gambar = upload();
   }
 
-  $query = "UPDATE user SET email = '$username', 
-  nama_lengkap = '$nama',
-  hp = '$hp',
-  jenis_kelamin = '$gender',
-  foto = '$upload'
-  WHERE id_user = '$userid'
+  $query = "UPDATE user_212279 SET 212279_email = '$username', 
+  212279_nama_lengkap = '$nama',
+  212279_no_handphone = '$no_handphone',
+  212279_jenis_kelamin = '$gender',
+  212279_foto = '$gambar'
+  WHERE 212279_id_user = '$userid'
   ";
 
   mysqli_query($conn, $query);
@@ -116,7 +120,7 @@ function pesan($data)
   $harga = $data["harga"];
   $total = date("H", strtotime($lama)) * $harga;
 
-  mysqli_query($conn, "INSERT INTO sewa (iduser, idlap,lama,jmulai,jhabis,harga,tot) VALUES ('$userid','$idlpg','$lama','$mulai','$habis','$harga','$total') ");
+  mysqli_query($conn, "INSERT INTO sewa_212279 (212279_id_user, 212279_id_lapangan,212279_lama_sewa,212279_jam_mulai,212279_jam_habis,212279_harga,212279_total) VALUES ('$userid','$idlpg','$lama','$mulai','$habis','$harga','$total') ");
 
   return mysqli_affected_rows($conn);
 }
@@ -124,7 +128,7 @@ function pesan($data)
 function bayar($data)
 {
   global $conn;
-  $idsewa = $data["idsewa"];
+  $id_sewa = $data["212279_id_sewa"];
 
   //Upload Gambar
   $upload = upload();
@@ -132,7 +136,7 @@ function bayar($data)
     return false;
   }
 
-  mysqli_query($conn, "INSERT INTO bayar (idsewa,bukti,konfirmasi) VALUES ('$idsewa','$upload','Sudah Bayar')");
+  mysqli_query($conn, "INSERT INTO bayar_212279 (212279_id_sewa,212279_bukti,212279_konfirmasi) VALUES ('$id_sewa','$upload','Sudah Bayar')");
 
   return mysqli_affected_rows($conn);
 }
@@ -141,7 +145,7 @@ function tambahLpg($data)
 {
   global $conn;
 
-  $lapangan = $data["lapangan"];
+  $lapangan_212279 = $data["lapangan"];
   $harga = $data["harga"];
 
   //Upload Gambar
@@ -151,7 +155,7 @@ function tambahLpg($data)
   }
 
 
-  $query = "INSERT INTO lapangan (nm,harga,foto) VALUES ('$lapangan','$harga','$upload')";
+  $query = "INSERT INTO lapangan_212279 (212279_nama,212279_harga,212279_foto) VALUES ('$lapangan_212279','$harga','$upload')";
 
   mysqli_query($conn, $query);
   return mysqli_affected_rows($conn);
@@ -204,7 +208,7 @@ function editLpg($data)
   global $conn;
 
   $id = $data["idlap"];
-  $lapangan = $data["lapangan"];
+  $lapangan_212279 = $data["lapangan"];
   $ket = $data["ket"];
   $harga = $data["harga"];
   $gambarLama =  $data["fotoLama"];
@@ -217,11 +221,11 @@ function editLpg($data)
   }
 
 
-  $query = "UPDATE lapangan SET 
-  nm = '$lapangan',
-  ket = '$ket',
-  harga = '$harga',
-  foto = '$gambar' WHERE idlap = '$id'
+  $query = "UPDATE lapangan_212279 SET 
+  212279_nama = '$lapangan_212279',
+  212279_keterangan = '$ket',
+  212279_harga = '$harga',
+  212279_foto = '$gambar' WHERE 212279_id_lapangan = '$id'
   ";
 
   mysqli_query($conn, $query);
@@ -236,10 +240,10 @@ function tambahAdmin($data)
   $username = $data["username"];
   $password = $data["password"];
   $nama = $data["nama"];
-  $hp = $data["hp"];
+  $no_handphone= $data["hp"];
   $email = $data["email"];
 
-  $query = "INSERT INTO admin (username,password,nama,phone,email) VALUES ('$username','$password','$nama','$hp','$email')";
+  $query = "INSERT INTO admin_212279 (212279_username,212279_password,212279_nama,212279_no_handphone,212279_email) VALUES ('$username','$password','$nama','$no_handphone','$email')";
 
   mysqli_query($conn, $query);
   return mysqli_affected_rows($conn);
@@ -253,15 +257,15 @@ function editAdmin($data)
   $username = $data["username"];
   $password = $data["password"];
   $nama = $data["nama"];
-  $hp = $data["hp"];
+  $no_handphone= $data["hp"];
   $email = $data["email"];
 
-  $query = "UPDATE admin SET 
-  username = '$username',
-  password = '$password',
-  nama = '$nama',
-  phone = '$hp',
-  email  = '$email' WHERE id_user = '$id'
+  $query = "UPDATE admin_212279 SET 
+  212279_username = '$username',
+  212279_password = '$password',
+  212279_nama = '$nama',
+  212279_no_handphone = '$no_handphone',
+  212279_email  = '$email' WHERE 212279_id_user = '$id'
   
   ";
 
@@ -269,12 +273,12 @@ function editAdmin($data)
   return mysqli_affected_rows($conn);
 }
 
-function konfirmasi($idsewa)
+function konfirmasi($id_sewa)
 {
   global $conn;
 
-  $id = $idsewa;
+  $id = $id_sewa;
 
-  mysqli_query($conn, "UPDATE bayar set konfirmasi = ('Terkonfirmasi') WHERE idsewa = '$id'");
+  mysqli_query($conn, "UPDATE bayar_212279 set 212279_konfirmasi = ('Terkonfirmasi') WHERE 212279_id_sewa = '$id'");
   return mysqli_affected_rows($conn);
 }

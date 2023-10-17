@@ -9,7 +9,7 @@ if ($role !== 'Admin') {
 
 // Pagination
 $jmlHalamanPerData = 3;
-$jumlahData = count(query("SELECT * FROM lapangan"));
+$jumlahData = count(query("SELECT * FROM lapangan_212279"));
 $jmlHalaman = ceil($jumlahData / $jmlHalamanPerData);
 
 if (isset($_GET["halaman"])) {
@@ -20,7 +20,7 @@ if (isset($_GET["halaman"])) {
 
 $awalData = ($jmlHalamanPerData * $halamanAktif) - $jmlHalamanPerData;
 
-$lapangan = query("SELECT * FROM lapangan LIMIT $awalData, $jmlHalamanPerData");
+$lapangan = query("SELECT * FROM lapangan_212279 LIMIT $awalData, $jmlHalamanPerData");
 
 if (isset($_POST["simpan"])) {
   if (tambahLpg($_POST) > 0) {
@@ -140,50 +140,50 @@ if (isset($_POST["edit"])) {
               <tr>
 
                 <th scope="row"><?= $i++; ?></th>
-                <td><?= $row["nm"]; ?></td>
-                <td><?= $row["harga"]; ?></td>
-                <td><?= $row["ket"]; ?></td>
-                <td><img src="../img/<?= $row["foto"]; ?>" width="100" height="100"></td>
+                <td><?= $row["212279_nama"]; ?></td>
+                <td><?= $row["212279_harga"]; ?></td>
+                <td><?= $row["212279_keterangan"]; ?></td>
+                <td><img src="../img/<?= $row["212279_foto"]; ?>" width="100" height="100"></td>
                 <td>
-                  <button class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#editModal<?= $row["idlap"]; ?>">Edit</button>
-                  <a href="./controller/hapusLpg.php?id=<?= $row["idlap"]; ?>" class="btn btn-danger">Hapus</a>
+                  <button class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#editModal<?= $row["212279_id_lapangan"]; ?>">Edit</button>
+                  <a href="./controller/hapusLpg.php?id=<?= $row["212279_id_lapangan"]; ?>" class="btn btn-danger">Hapus</a>
                 </td>
                 <!-- Edit Modal -->
-                <div class="modal fade" id="editModal<?= $row["idlap"]; ?>" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editModal<?= $row["212279_id_lapangan"]; ?>" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="tambahModalLabel">Edit Lapangan <?= $row["nm"]; ?></h5>
+                        <h5 class="modal-title" id="tambahModalLabel">Edit Lapangan <?= $row["212279_nama"]; ?></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <form action="" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="idlap" class="form-control" id="exampleInputPassword1" value="<?= $row["idlap"]; ?>">
-                        <input type="hidden" name="fotoLama" class="form-control" id="exampleInputPassword1" value="<?= $row["foto"]; ?>">
+                        <input type="hidden" name="idlap" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_id_lapangan"]; ?>">
+                        <input type="hidden" name="fotoLama" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_foto"]; ?>">
                         <div class="modal-body">
                           <!-- konten form modal -->
                           <div class="row justify-content-center align-items-center">
                             <div class="mb-3">
-                              <img src="../img/<?= $row["foto"]; ?>" alt="gambar lapangan" class="img-fluid">
+                              <img src="../img/<?= $row["212279_foto"]; ?>" alt="gambar lapangan" class="img-fluid">
                             </div>
                             <div class="col">
                               <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Nama Lapangan</label>
-                                <input type="text" name="lapangan" class="form-control" id="exampleInputPassword1" value="<?= $row["nm"]; ?>">
+                                <input type="text" name="lapangan" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_nama"]; ?>">
                               </div>
                             </div>
                             <div class="col">
                               <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Harga</label>
-                                <input type="number" name="harga" class="form-control" id="exampleInputPassword1" value="<?= $row["harga"]; ?>">
+                                <input type="number" name="harga" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_harga"]; ?>">
                               </div>
                             </div>
                             <div class="mb-3">
                               <label for="exampleInputPassword1" class="form-label">Foto : </label>
-                              <input type="file" name="foto" class="form-control" id="exampleInputPassword1" value="<?= $row["harga"]; ?>">
+                              <input type="file" name="foto" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_harga"]; ?>">
                             </div>
                             <div class="mb-3">
                               <label for="exampleInputPassword1" class="form-label">Keterangan : </label>
-                              <input type="text" name="ket" class="form-control" id="exampleInputPassword1" value="<?= $row["ket"]; ?>">
+                              <input type="text" name="ket" class="form-control" id="exampleInputPassword1" value="<?= $row["212279_keterangan"]; ?>">
                             </div>
                           </div>
                         </div>

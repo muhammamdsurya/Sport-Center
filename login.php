@@ -16,18 +16,18 @@ if (isset($_POST["login"])) {
   $username = $_POST["username"];
   $password = $_POST["password"];
 
-  $cariadmin = query("SELECT * FROM admin WHERE email = '$username' AND password = '$password'");
-  $cariuser = query("SELECT * FROM user WHERE email = '$username' AND password = '$password'");
+  $cariadmin = query("SELECT * FROM admin_212279 WHERE 212279_email = '$username' AND 212279_password = '$password'");
+  $cariuser = query("SELECT * FROM user_212279 WHERE 212279_email = '$username' AND 212279_password = '$password'");
 
   if ($cariadmin) {
     // set session
-    $_SESSION['username'] = $cariadmin[0]['nama'];
+    $_SESSION['username'] = $cariadmin[0]['212279_nama'];
     $_SESSION['role'] = "Admin";
     header("Location: admin/admin.php");
   } else if ($cariuser) {
     // set session
-    $_SESSION['email'] = $cariuser[0]['email'];
-    $_SESSION['id_user'] = $cariuser[0]['id_user'];
+    $_SESSION['email'] = $cariuser[0]['212279_email'];
+    $_SESSION['id_user'] = $cariuser[0]['212279_id_user'];
     $_SESSION['role'] = "User";
     header("Location: user/lapangan.php");
   } else {

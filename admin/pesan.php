@@ -9,10 +9,10 @@ if ($role !== 'Admin') {
 
 // Pagination
 $jmlHalamanPerData = 3;
-$jumlahData = count(query("SELECT sewa.idsewa,user.nama_lengkap,sewa.tgl_pesan,sewa.jmulai,sewa.lama,sewa.tot,bayar.bukti,bayar.konfirmasi
-FROM sewa
-JOIN user ON sewa.iduser = user.id_user
-JOIN bayar ON sewa.idsewa = bayar.idsewa"));
+$jumlahData = count(query("SELECT sewa_212279.212279_id_sewa,user_212279.212279_nama_lengkap,sewa_212279.212279_tanggal_pesan,sewa_212279.212279_jam_mulai,sewa_212279.212279_lama_sewa,sewa_212279.212279_total,bayar_212279.212279_bukti,bayar_212279.212279_konfirmasi
+FROM sewa_212279
+JOIN user_212279 ON sewa_212279.212279_id_user = user_212279.212279_id_user
+JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa"));
 $jmlHalaman = ceil($jumlahData / $jmlHalamanPerData);
 
 if (isset($_GET["halaman"])) {
@@ -23,10 +23,10 @@ if (isset($_GET["halaman"])) {
 
 $awalData = ($jmlHalamanPerData * $halamanAktif) - $jmlHalamanPerData;
 
-$pesan = query("SELECT sewa.idsewa,user.nama_lengkap,sewa.tgl_pesan,sewa.jmulai,sewa.lama,sewa.tot,bayar.bukti,bayar.konfirmasi
-FROM sewa
-JOIN user ON sewa.iduser = user.id_user
-JOIN bayar ON sewa.idsewa = bayar.idsewa LIMIT $awalData, $jmlHalamanPerData");
+$pesan = query("SELECT sewa_212279.212279_id_sewa,user_212279.212279_nama_lengkap,sewa_212279.212279_tanggal_pesan,sewa_212279.212279_jam_mulai,sewa_212279.212279_lama_sewa,sewa_212279.212279_total,bayar_212279.212279_bukti,bayar_212279.212279_konfirmasi
+FROM sewa_212279
+JOIN user_212279 ON sewa_212279.212279_id_user = user_212279.212279_id_user
+JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa LIMIT $awalData, $jmlHalamanPerData");
 
 
 ?>
@@ -87,25 +87,25 @@ JOIN bayar ON sewa.idsewa = bayar.idsewa LIMIT $awalData, $jmlHalamanPerData");
             <?php foreach ($pesan as $row) : ?>
               <tr>
                 <td><?= $i++; ?></td>
-                <td><?= $row["nama_lengkap"]; ?></td>
-                <td><?= $row["tgl_pesan"]; ?></td>
-                <td><?= $row["jmulai"]; ?></td>
-                <td><?= $row["lama"]; ?></td>
-                <td><?= $row["tot"]; ?></td>
-                <td><img src="../img/<?= $row["bukti"]; ?>" width="100" height="100"></td>
-                <td><?= $row["konfirmasi"]; ?></td>
+                <td><?= $row["212279_nama_lengkap"]; ?></td>
+                <td><?= $row["212279_tanggal_pesan"]; ?></td>
+                <td><?= $row["212279_jam_mulai"]; ?></td>
+                <td><?= $row["212279_lama_sewa"]; ?></td>
+                <td><?= $row["212279_total"]; ?></td>
+                <td><img src="../img/<?= $row["212279_bukti"]; ?>" width="100" height="100"></td>
+                <td><?= $row["212279_konfirmasi"]; ?></td>
                 <td>
                   <?php
-                  $idsewa = $row["idsewa"];
-                  if ($row["konfirmasi"] == "Terkonfirmasi") {
+                  $id_sewa = $row["212279_id_sewa"];
+                  if ($row["212279_konfirmasi"] == "Terkonfirmasi") {
                     // tampilkan tombol Bayar dan Hapus
                     echo '';
                   } else {
                     // tampilkan tombol Detail
-                    echo ' <button type="button" class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#konfirmasiModal' . $idsewa . '">
+                    echo ' <button type="button" class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#konfirmasiModal' . $id_sewa . '">
                     Konfir
                   </button>
-                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapusModal' . $idsewa . '">
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapusModal' . $id_sewa . '">
                     Hapus
                   </button>
                   ';
@@ -114,11 +114,11 @@ JOIN bayar ON sewa.idsewa = bayar.idsewa LIMIT $awalData, $jmlHalamanPerData");
                 </td>
               </tr>
               <!-- Modal Konfirmasi -->
-              <div class="modal fade" id="konfirmasiModal<?= $row["idsewa"]; ?>" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
+              <div class="modal fade" id="konfirmasiModal<?= $row["212279_id_sewa"]; ?>" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Pesanan <?= $row["nama_lengkap"]; ?></h5>
+                      <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Pesanan <?= $row["212279_nama_lengkap"]; ?></h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -126,7 +126,7 @@ JOIN bayar ON sewa.idsewa = bayar.idsewa LIMIT $awalData, $jmlHalamanPerData");
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                      <a href="./controller/konfirmasiPesan.php?id=<?= $row["idsewa"]; ?>" class="btn btn-primary">Konfirmasi</a>
+                      <a href="./controller/konfirmasiPesan.php?id=<?= $row["212279_id_sewa"]; ?>" class="btn btn-primary">Konfirmasi</a>
                     </div>
                   </div>
                 </div>
@@ -134,11 +134,11 @@ JOIN bayar ON sewa.idsewa = bayar.idsewa LIMIT $awalData, $jmlHalamanPerData");
               <!-- End Modal Konfirmasi -->
 
               <!-- Modal Hapus -->
-              <div class="modal fade" id="hapusModal<?= $row["idsewa"]; ?>" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
+              <div class="modal fade" id="hapusModal<?= $row["212279_id_sewa"]; ?>" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="hapusModalLabel">Hapus Pesanan <?= $row["nama_lengkap"]; ?></h5>
+                      <h5 class="modal-title" id="hapusModalLabel">Hapus Pesanan <?= $row["212279_nama_lengkap"]; ?></h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -146,7 +146,7 @@ JOIN bayar ON sewa.idsewa = bayar.idsewa LIMIT $awalData, $jmlHalamanPerData");
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                      <a href="./controller/hapusPesan.php?id=<?= $row["idsewa"]; ?>" class="btn btn-danger">Hapus</a>
+                      <a href="./controller/hapusPesan.php?id=<?= $row["212279_id_sewa"]; ?>" class="btn btn-danger">Hapus</a>
                     </div>
                   </div>
                 </div>
