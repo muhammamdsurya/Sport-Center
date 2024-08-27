@@ -25,85 +25,62 @@ if (isset($_POST["daftar"])) {
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://unpkg.com/feather-icons"></script>
-  <style>
-    .center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 800px;
-      background: var(--bg);
-      border-radius: 10px;
-      box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
-    }
-
-    .center h1 {
-      text-align: center;
-      padding: 20px 0;
-      color: var(--primary);
-    }
-
-    .center form {
-      padding: 0 40px;
-      box-sizing: border-box;
-    }
-  </style>
+ 
 </head>
 
 <body class="login">
-  <div class="center">
-    <form action="" method="post" enctype="multipart/form-data">
-      <h1>Registrasi</h1>
-      <div class="row justify-content-center align-items-center">
-        <div class="col">
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Nama Lengkap</label>
-            <input type="text" name="nama" class="form-control" id="exampleInputPassword1" required>
+  <div class="full-height">
+<div class="container ">
+  <div class="row justify-content-center ">
+    <div class="col-lg-8 col-md-11 col-sm-11">
+      <form action="" method="post" enctype="multipart/form-data" class="bg-light py-2 px-4 rounded">
+        <h1 class="regis mb-3">Registrasi</h1>
+        <div class="row">
+          <div class="col-lg-6 col-6 mb-2">
+            <label for="nama" class="form-label">Nama Lengkap</label>
+            <input type="text" name="nama" class="form-control" id="nama" required>
           </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" id="exampleInputPassword1" required>
+          <div class="col-lg-6 col-6 mb-2">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="email" required>
+          </div>
+          <div class="col-lg-6 col-6 mb-2">
+            <label for="hp" class="form-label">No Hp</label>
+            <input type="text" name="hp" class="form-control" id="hp" required>
+          </div>
+          <div class="col-lg-6 col-6 mb-2">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password" required>
+          </div>
+          <div class="col-12 mb-2">
+            <label for="alamat" class="form-label">Alamat</label>
+            <input type="text" name="alamat" class="form-control" id="alamat" required>
+          </div>
+          <div class="col-12 mb-2 d-flex gap-3">
+            <label class="form-label">Jenis Kelamin : </label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="gender" id="male" value="Laki-Laki" required>
+              <label class="form-check-label" for="male">Laki-Laki</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="gender" id="female" value="Perempuan" required>
+              <label class="form-check-label" for="female">Perempuan</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="foto" class="form-label">Foto</label>
+            <input type="file" name="foto" class="form-control" id="foto" required>
+          </div>
+          <div class="col-12 my-2 text-center">
+            <button class="button btn-inti" name="daftar" id="daftar">Daftar</button>
+            <p class="mt-2">Sudah punya akun ? <a href="../login.php">Login</a></p>
           </div>
         </div>
-        <div class="col">
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">No Hp</label>
-            <input type="text" name="hp" class="form-control" id="exampleInputPassword1" required>
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Alamat</label>
-          <input type="text" name="alamat" class="form-control" id="exampleInputPassword1" required>
-        </div>
-        <div class="mb-3 d-flex ">
-          <p>Jenis Kelamin : </p>
-          <div class="form-check mx-3">
-            <input class="form-check-input" type="radio" name="gender" id="male" value="Laki-Laki">
-            <label class="form-check-label" for="male">
-              Laki-Laki
-            </label>
-          </div>
-          <div class="form-check mx-3">
-            <input class="form-check-input" type="radio" name="gender" id="female" value="Perempuan">
-            <label class="form-check-label" for="female">
-              Perempuan
-            </label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Foto</label>
-          <input type="file" name="foto" class="form-control" id="exampleInputPassword1" required>
-        </div>
-        <div class="mt-3 mb-4">
-          <button class="button btn-inti" name="daftar" id="daftar">Daftar</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
+</div>
+</div>
 </body>
 
 </html>

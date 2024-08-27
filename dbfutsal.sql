@@ -53,7 +53,7 @@ CREATE TABLE `bayar_212279` (
   `212279_id_bayar` int(11) NOT NULL,
   `212279_id_sewa` int(11) NOT NULL,
   `212279_bukti` text NOT NULL,
-  `212279_tanggal_upload` date NOT NULL DEFAULT current_timestamp(),
+  `212279_tanggal_upload` date NOT NULL,
   `212279_konfirmasi` varchar(50) NOT NULL DEFAULT 'Belum'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -102,7 +102,7 @@ CREATE TABLE `sewa_212279` (
   `212279_id_sewa` int(11) NOT NULL,
   `212279_id_user` int(11) NOT NULL,
   `212279_id_lapangan` int(11) NOT NULL,
-  `212279_tanggal_pesan` date NOT NULL DEFAULT current_timestamp(),
+  `212279_tanggal_pesan` date NOT NULL ,
   `212279_lama_sewa` int(11) NOT NULL,
   `212279_jam_mulai` datetime NOT NULL,
   `212279_jam_habis` datetime NOT NULL,

@@ -8,7 +8,7 @@ if ($role !== 'Admin') {
 }
 
 // Pagination
-$jmlHalamanPerData = 3;
+$jmlHalamanPerData = 4;
 $jumlahData = count(query("SELECT sewa_212279.212279_id_sewa,user_212279.212279_nama_lengkap,sewa_212279.212279_tanggal_pesan,sewa_212279.212279_jam_mulai,sewa_212279.212279_lama_sewa,sewa_212279.212279_total,bayar_212279.212279_bukti,bayar_212279.212279_konfirmasi
 FROM sewa_212279
 JOIN user_212279 ON sewa_212279.212279_id_user = user_212279.212279_id_user
@@ -39,36 +39,80 @@ JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa LI
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 
-  <title>Data Pesanan</title>
+  <title>Home</title>
 </head>
 
 <body>
-  <div class="container-fluid">
-    <div class="row min-vh-100">
-      <div class="sidebar col-2 bg-secondary">
-        <!-- Sidebar -->
-        <h5 class="mt-5 judul text-center"><?= $_SESSION["username"]; ?></h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item bg-transparent"><a href="home.php">Home</a></li>
-          <li class="list-group-item bg-transparent"><a href="member.php">Data Member</a></li>
-          <li class="list-group-item bg-transparent"><a href="lapangan.php">Data Lapangan</a></li>
-          <li class="list-group-item bg-transparent"><a href="pesan.php">Data Pesanan</a></li>
-          <li class="list-group-item bg-transparent"><a href="admin.php">Data Admin</a></li>
-          <li class="list-group-item bg-transparent"></li>
-        </ul>
-        <a href="../logout.php" class="mt-5 btn btn-inti text-dark">Logout</a>
+  <div class="wrapper">
+    <aside id="sidebar">
+      <div class="d-flex">
+        <button class="toggle-btn" type="button">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="sidebar-logo">
+          <a href="#" class="text-decoration-none"><?= $_SESSION['username'];?></a>
+        </div>
       </div>
-      <div class="col-10 p-5 mt-5">
+      <ul class="sidebar-nav">
+        <li class="sidebar-item">
+          <a href="home.php" class="sidebar-link">
+          <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="member.php" class="sidebar-link">
+            <i class="fa-solid fa-user"></i>
+            <span>Data Member</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="lapangan.php" class="sidebar-link">
+            <i class="fa-solid fa-dumbbell"></i>
+            <span>Data Lapangan</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="pesan.php" class="sidebar-link">
+            <i class="fa-solid fa-money-bills"></i>
+            <span>Data Pesanan</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="admin.php" class="sidebar-link">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>Data Admin</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="../logout.php" class="sidebar-link">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+    <div class="main">
+      <nav class="navbar bg-light shadow">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="../assets/img/logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            Admin Dashboard
+          </a>
+        </div>
+      </nav>
         <!-- Konten -->
-        <h3 class="judul">Data Pesanan</h3>
+        <div class="container">
+        <!-- Konten -->
+        <h3 class="mt-4">Data Pesanan</h3>
         <hr>
-        <a href="export.php" class="btn btn-inti mt-5">Download</a>
-        <table class="table table-hover mt-3">
+        <a href="export.php" class="btn btn-inti mb-2">Download</a>
+        <div class="table-responsive">
+        <table class="table table-hover">
           <thead class="table-inti">
             <tr>
               <th scope="col">No</th>
@@ -82,7 +126,7 @@ JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa LI
               <th scope="col"></th>
             </tr>
           </thead>
-          <tbody class="text">
+          <tbody>
             <?php $i = 1; ?>
             <?php foreach ($pesan as $row) : ?>
               <tr>
@@ -92,7 +136,7 @@ JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa LI
                 <td><?= $row["212279_jam_mulai"]; ?></td>
                 <td><?= $row["212279_lama_sewa"]; ?></td>
                 <td><?= $row["212279_total"]; ?></td>
-                <td><img src="../img/<?= $row["212279_bukti"]; ?>" width="100" height="100"></td>
+                <td><img src="../img/<?= $row["212279_bukti"]; ?>" width="50" height="50"></td>
                 <td><?= $row["212279_konfirmasi"]; ?></td>
                 <td>
                   <?php
@@ -155,6 +199,7 @@ JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa LI
             <?php endforeach; ?>
           </tbody>
         </table>
+        </div>
 
         <ul class="pagination">
           <?php if ($halamanAktif > 1) : ?>
@@ -177,10 +222,18 @@ JOIN bayar_212279 ON sewa_212279.212279_id_sewa = bayar_212279.212279_id_sewa LI
             </li>
           <?php endif; ?>
         </ul>
+        </div>
+    </div>
 
-      </div>
+    <script>
+      const hamBurger = document.querySelector(".toggle-btn");
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+      hamBurger.addEventListener("click", function() {
+        document.querySelector("#sidebar").classList.toggle("expand");
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
 </html>

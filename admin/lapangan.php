@@ -8,7 +8,7 @@ if ($role !== 'Admin') {
 }
 
 // Pagination
-$jmlHalamanPerData = 3;
+$jmlHalamanPerData = 4;
 $jumlahData = count(query("SELECT * FROM lapangan_212279"));
 $jmlHalaman = ceil($jumlahData / $jmlHalamanPerData);
 
@@ -26,6 +26,7 @@ if (isset($_POST["simpan"])) {
   if (tambahLpg($_POST) > 0) {
     echo "<script>
           alert('Berhasil DiTambahkan');
+          window.location.href = 'lapangan.php';
           </script>";
   } else {
     echo "<script>
@@ -38,6 +39,7 @@ if (isset($_POST["edit"])) {
   if (editLpg($_POST) > 0) {
     echo "<script>
           alert('Berhasil Di Ubah');
+          window.location.href = 'lapangan.php';
           </script>";
   } else {
     echo "<script>
@@ -47,7 +49,6 @@ if (isset($_POST["edit"])) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,33 +57,78 @@ if (isset($_POST["edit"])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <title>Data Lapangan</title>
+
+  <title>Home</title>
 </head>
 
 <body>
-  <div class="container-fluid">
-    <div class="row min-vh-100">
-      <div class="sidebar col-2 bg-secondary">
-        <!-- Sidebar -->
-        <h5 class="mt-5 judul text-center">
-          <h5 class="mt-5 judul text-center"><?= $_SESSION["username"]; ?></h5>
-        </h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item bg-transparent"><a href="home.php">Home</a></li>
-          <li class="list-group-item bg-transparent"><a href="member.php">Data Member</a></li>
-          <li class="list-group-item bg-transparent"><a href="lapangan.php">Data Lapangan</a></li>
-          <li class="list-group-item bg-transparent"><a href="pesan.php">Data Pesanan</a></li>
-          <li class="list-group-item bg-transparent"><a href="admin.php">Data Admin</a></li>
-          <li class="list-group-item bg-transparent"></li>
-        </ul>
-        <a href="../logout.php" class="mt-5 btn btn-inti text-dark">Logout</a>
+  <div class="wrapper">
+    <aside id="sidebar">
+      <div class="d-flex">
+        <button class="toggle-btn" type="button">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="sidebar-logo">
+          <a href="#" class="text-decoration-none"><?= $_SESSION['username'];?></a>
+        </div>
       </div>
-      <div class="col-10 p-5 mt-5">
+      <ul class="sidebar-nav">
+        <li class="sidebar-item">
+          <a href="home.php" class="sidebar-link">
+          <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="member.php" class="sidebar-link">
+            <i class="fa-solid fa-user"></i>
+            <span>Data Member</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="lapangan.php" class="sidebar-link">
+            <i class="fa-solid fa-dumbbell"></i>
+            <span>Data Lapangan</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="pesan.php" class="sidebar-link">
+            <i class="fa-solid fa-money-bills"></i>
+            <span>Data Pesanan</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="admin.php" class="sidebar-link">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>Data Admin</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="../logout.php" class="sidebar-link">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+    <div class="main">
+      <nav class="navbar bg-light shadow">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="../assets/img/logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            Admin Dashboard
+          </a>
+        </div>
+      </nav>
         <!-- Konten -->
-        <h3 class="judul">Data Lapangan</h3>
+     <div class="container">
+       <!-- Konten -->
+       <h3 class="mt-4">Data Lapangan</h3>
         <hr>
-        <button class="btn btn-inti mt-5" data-bs-toggle="modal" data-bs-target="#tambahModal1">Tambah</button>
+        <button class="btn btn-inti mb-2" data-bs-toggle="modal" data-bs-target="#tambahModal1">Tambah</button>
         <!-- Modal Tambah -->
         <div class="modal fade" id="tambahModal1" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
@@ -111,6 +157,10 @@ if (isset($_POST["edit"])) {
                       <label for="exampleInputPassword1" class="form-label">Foto</label>
                       <input type="file" name="foto" class="form-control" id="exampleInputPassword1">
                     </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Keterangan</label>
+                      <input type="text" name="ket" class="form-control" id="exampleInputPassword1">
+                    </div>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -122,8 +172,8 @@ if (isset($_POST["edit"])) {
           </div>
         </div>
         <!-- End Modal Tambah -->
-
-        <table class="table table-hover mt-3">
+         <div class="table-responsive">
+        <table class="table table-hover">
           <thead class="table-inti">
             <tr>
               <th scope="col">No</th>
@@ -134,7 +184,7 @@ if (isset($_POST["edit"])) {
               <th scope="col">Aksi</th>
             </tr>
           </thead>
-          <tbody class="text">
+          <tbody>
             <?php $i = 1; ?>
             <?php foreach ($lapangan as $row) : ?>
               <tr>
@@ -143,7 +193,7 @@ if (isset($_POST["edit"])) {
                 <td><?= $row["212279_nama"]; ?></td>
                 <td><?= $row["212279_harga"]; ?></td>
                 <td><?= $row["212279_keterangan"]; ?></td>
-                <td><img src="../img/<?= $row["212279_foto"]; ?>" width="100" height="100"></td>
+                <td><img src="../img/<?= $row["212279_foto"]; ?>" width="50" height="50"></td>
                 <td>
                   <button class="btn btn-inti" data-bs-toggle="modal" data-bs-target="#editModal<?= $row["212279_id_lapangan"]; ?>">Edit</button>
                   <a href="./controller/hapusLpg.php?id=<?= $row["212279_id_lapangan"]; ?>" class="btn btn-danger">Hapus</a>
@@ -200,6 +250,7 @@ if (isset($_POST["edit"])) {
             <?php endforeach; ?>
           </tbody>
         </table>
+        </div>
 
         <ul class="pagination">
           <?php if ($halamanAktif > 1) : ?>
@@ -223,8 +274,18 @@ if (isset($_POST["edit"])) {
           <?php endif; ?>
         </ul>
 
-      </div>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+     </div>
+    </div>
+
+    <script>
+      const hamBurger = document.querySelector(".toggle-btn");
+
+      hamBurger.addEventListener("click", function() {
+        document.querySelector("#sidebar").classList.toggle("expand");
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
 </html>

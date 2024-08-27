@@ -13,6 +13,16 @@ function query($query)
   return $rows;
 }
 
+function getCount($query)
+{
+  global $conn;
+  $result = mysqli_query($conn, $query);
+  if ($row = mysqli_fetch_assoc($result)) {
+    return (int) $row['total'];
+  }
+  return 0;
+}
+
 function hapusMember($id)
 {
   global $conn;
@@ -84,7 +94,7 @@ function edit($data)
   $gender = $data["jenis_kelamin"];
   $gambar = $data["foto"];
   $gambarLama = $data["fotoLama"];
- 
+
   // Cek apakah User pilih gambar baru
   if ($_FILES["foto"]["error"] === 4) {
     $gambar = $gambarLama;
@@ -106,29 +116,45 @@ function edit($data)
 
 function pesan($data)
 {
-  global $conn;
+    global $conn;
 
-  $userid = $_SESSION["id_user"];
-  $idlpg = $data["id_lpg"];
-  $lama =  $data["jam_mulai"];
-  $mulai = $data["tgl_main"];
-  $mulai_waktu = strtotime($mulai); // mengubah format datetime-local menjadi format UNIX timestamp
-  $habis_waktu = $mulai_waktu + (intval($lama) * 3600); // menambahkan waktu dalam menit ke waktu awal
-  $habis = date('Y-m-d\TH:i', $habis_waktu); // mengubah format waktu kembali ke datetime-local
-  $habis_datetime_local = date('Y-m-d\TH:i:s', strtotime($habis)); // mengubah format waktu dari Y-m-d\TH:i ke format datetime-local
-  $habis = $habis_datetime_local; // menyimpan hasil ke dalam variabel $habis_datetime_local
-  $harga = $data["harga"];
-  $total = date("H", strtotime($lama)) * $harga;
+    $userid = $_SESSION["id_user"];
+    $idlpg = $data["id_lpg"];
+    $tanggal_pesan = date('Y-m-d H:i:s'); // Menyimpan tanggal dan waktu saat ini
+    $lama = intval($data["jam_mulai"]); // Menganggap 'jam_mulai' adalah jumlah jam sewa
+    $mulai = $data["tgl_main"];
+    $mulai_waktu = strtotime($mulai); // Mengubah format datetime-local menjadi format UNIX timestamp
+    $habis_waktu = $mulai_waktu + ($lama * 3600); // Menambahkan waktu sewa dalam jam ke waktu mulai
+    $habis = date('Y-m-d\TH:i:s', $habis_waktu); // Mengubah format waktu kembali ke datetime-local
+    $harga = $data["harga"];
 
-  mysqli_query($conn, "INSERT INTO sewa_212279 (212279_id_user, 212279_id_lapangan,212279_lama_sewa,212279_jam_mulai,212279_jam_habis,212279_harga,212279_total) VALUES ('$userid','$idlpg','$lama','$mulai','$habis','$harga','$total') ");
+    // Cek bentrokan jadwal
+    $query = "SELECT * FROM sewa_212279 WHERE 212279_id_lapangan = '$idlpg' 
+              AND ((212279_jam_mulai < '$habis' AND 212279_jam_habis > '$mulai') 
+              OR (212279_jam_mulai < '$mulai' AND 212279_jam_habis > '$habis'))";
+    $result = mysqli_query($conn, $query);
 
-  return mysqli_affected_rows($conn);
+    if (mysqli_num_rows($result) > 0) {
+        // Jika ada bentrokan jadwal
+        return false;
+    } else {
+        // Tidak ada bentrokan, lanjutkan dengan penyimpanan data
+        $total = $lama * $harga;
+        mysqli_query($conn, "INSERT INTO sewa_212279 (212279_id_user, 212279_id_lapangan, 212279_tanggal_pesan, 212279_lama_sewa, 212279_jam_mulai, 212279_jam_habis, 212279_harga, 212279_total) 
+                             VALUES ('$userid', '$idlpg', '$tanggal_pesan', '$lama', '$mulai', '$habis', '$harga', '$total')");
+
+        return mysqli_affected_rows($conn);
+    }
 }
+
 
 function bayar($data)
 {
+
   global $conn;
-  $id_sewa = $data["212279_id_sewa"];
+  $id_sewa = $data["id_sewa"];
+  $tanggal_upload = date('Y-m-d H:i:s'); // Menyimpan tanggal dan waktu saat ini
+
 
   //Upload Gambar
   $upload = upload();
@@ -136,7 +162,7 @@ function bayar($data)
     return false;
   }
 
-  mysqli_query($conn, "INSERT INTO bayar_212279 (212279_id_sewa,212279_bukti,212279_konfirmasi) VALUES ('$id_sewa','$upload','Sudah Bayar')");
+  mysqli_query($conn, "INSERT INTO bayar_212279 (212279_id_sewa, 212279_bukti, 212279_tanggal_upload, 212279_konfirmasi) VALUES ('$id_sewa', '$upload', '$tanggal_upload', 'Sudah Bayar')");
 
   return mysqli_affected_rows($conn);
 }
@@ -147,6 +173,7 @@ function tambahLpg($data)
 
   $lapangan_212279 = $data["lapangan"];
   $harga = $data["harga"];
+  $ket = $data["ket"];
 
   //Upload Gambar
   $upload = upload();
@@ -155,7 +182,7 @@ function tambahLpg($data)
   }
 
 
-  $query = "INSERT INTO lapangan_212279 (212279_nama,212279_harga,212279_foto) VALUES ('$lapangan_212279','$harga','$upload')";
+  $query = "INSERT INTO lapangan_212279 (212279_nama,212279_harga,212279_foto,212279_keterangan) VALUES ('$lapangan_212279','$harga','$upload','$ket')";
 
   mysqli_query($conn, $query);
   return mysqli_affected_rows($conn);
@@ -240,7 +267,7 @@ function tambahAdmin($data)
   $username = $data["username"];
   $password = $data["password"];
   $nama = $data["nama"];
-  $no_handphone= $data["hp"];
+  $no_handphone = $data["hp"];
   $email = $data["email"];
 
   $query = "INSERT INTO admin_212279 (212279_username,212279_password,212279_nama,212279_no_handphone,212279_email) VALUES ('$username','$password','$nama','$no_handphone','$email')";
@@ -257,7 +284,7 @@ function editAdmin($data)
   $username = $data["username"];
   $password = $data["password"];
   $nama = $data["nama"];
-  $no_handphone= $data["hp"];
+  $no_handphone = $data["hp"];
   $email = $data["email"];
 
   $query = "UPDATE admin_212279 SET 

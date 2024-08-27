@@ -2,10 +2,17 @@
 session_start();
 require "functions.php";
 
-$id_user = $_SESSION["id_user"];
+$loggedIn = isset($_SESSION['role']);
 
-$profil = query("SELECT * FROM user_212279 WHERE 212279_id_user = '$id_user'")[0];
+if ($loggedIn) {
 
+  $id_user = $_SESSION["id_user"];
+
+  // Melakukan query hanya jika $_SESSION["id_user"] sudah terdefinisi
+  $profil = query("SELECT * FROM user_212279 WHERE 212279_id_user = '$id_user'")[0];
+}
+
+$lapangan = query("SELECT * FROM lapangan_212279");
 
 if (isset($_POST["simpan"])) {
   if (edit($_POST) > 0) {
@@ -21,71 +28,79 @@ if (isset($_POST["simpan"])) {
 
 
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sport Center</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/feather-icons"></script>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Basecamp Sport Center</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
 </head>
 
-<body>
-  <!-- Navbar -->
-  <div class="container">
-    <nav class="navbar fixed-top bg-body-secondary navbar-expand-lg">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="kon1.png" alt="Logo" width="70" height="70" class="d-inline-block align-text-top">
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <img src="assets/img/logo.png" alt="">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.php" class="active">Beranda<br></a></li>
+          <li><a href="user/lapangan.php">Lapangan</a></li>
+          <?php if ($loggedIn) : ?>
+            <li class="nav-item">
+              <a class="nav-link" href="user/pesanan.php">Pesanan</a>
+            </li>
+          <?php endif; ?>
+          <li><a href="user/membership.php">Membership</a></li>
+          <li><a href="user/tournament.php">Tournament</a></li>
+          <li><a href="user/promo.php">Promo</a></li>
+          <li><a href="kontak.php">Kontak</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <?php if ($loggedIn) : ?>
+        <!-- Jika sudah login, tampilkan tombol profil -->
+        <a class="btn-getstarted" data-bs-toggle="modal" data-bs-target="#profilModal">
+          <i class="bi bi-person"></i> Profil
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-            <li class="nav-item ">
-              <a class="nav-link active" aria-current="page" href="#home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#bayar">Tata Cara</a>
-            </li>
-            <?php
-            if (isset($_SESSION['id_user'])) {
-              echo '
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="user/lapangan.php">Lapangan</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="user/bayar.php">Pembayaran</a>
-            </li>
-            ';
-            }
-            ?>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#contact">Kontak</a>
-            </li>
-          </ul>
-          <?php
-          if (isset($_SESSION['id_user'])) {
-            // jika user telah login, tampilkan tombol profil dan sembunyikan tombol login
-            echo '<a href="user/profil.php" data-bs-toggle="modal" data-bs-target="#profilModal" class="btn btn-inti"><i data-feather="user"></i></a>';
-          } else {
-            // jika user belum login, tampilkan tombol login dan sembunyikan tombol profil
-            echo '<a href="login.php" class="btn btn-inti" type="submit">Login</a>';
-          }
-          ?>
-        </div>
-      </div>
-    </nav>
-  </div>
-  <!-- End Navbar -->
+      <?php else : ?>
+        <!-- Jika belum login, tampilkan tombol login -->
+        <a href="login.php" class="btn-getstarted" type="submit">
+          <i class="bi bi-box-arrow-in-right"></i> Login
+        </a>
+      <?php endif; ?>
+
+
+    </div>
+  </header>
 
   <!-- Modal Profil -->
   <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
@@ -107,7 +122,7 @@ if (isset($_POST["simpan"])) {
                 <p><?= $profil["212279_email"]; ?></p>
                 <p><?= $profil["212279_no_handphone"]; ?></p>
                 <p><?= $profil["212279_alamat"]; ?></p>
-                <a href="logout.php" class="btn btn-danger">Logout</a>
+                <a href="../logout.php" class="btn btn-danger">Logout</a>
                 <a href="" data-bs-toggle="modal" data-bs-target="#editProfilModal" class="btn btn-inti">Edit Profil</a>
               </div>
             </div>
@@ -141,15 +156,15 @@ if (isset($_POST["simpan"])) {
                 <div class="mb-3">
                   <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                   <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
-                    <option value="Laki-laki" <?php if ($profil['jenis_kelamin'] == 'Laki-laki') echo 'selected'; ?>>Laki-laki</option>
-                    <option value="Perempuan" <?php if ($profil['jenis_kelamin'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
+                    <option value="Laki-laki" <?php if ($profil['212279_jenis_kelamin'] == 'Laki-laki') echo 'selected'; ?>>Laki-laki</option>
+                    <option value="Perempuan" <?php if ($profil['212279_jenis_kelamin'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
                   </select>
                 </div>
               </div>
               <div class="col">
-                <div class="mb-3">
-                  <label for=212279_" class="form-label">No Telp</label>
-                  <input type="number" name="212279_no_handphone" 212279_class"form-control" id="exampleInputPassword1" value="<?= $profil["212279_no_handphone"]; ?>">
+              <div class="mb-3">
+                  <label for="212279_no_handphone" class="form-label">No Telp</label>
+                  <input type="number" name="212279_no_handphone" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_no_handphone"]; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Email</label>
@@ -157,7 +172,7 @@ if (isset($_POST["simpan"])) {
                 </div>
               </div>
               <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">212279_alamat</label>
+                <label for="exampleInputPassword1" class="form-label">alamat</label>
                 <input type="text" name="212279_alamat" class="form-control" id="exampleInputPassword1" value="<?= $profil["212279_alamat"]; ?>">
               </div>
               <div class="mb-3">
@@ -176,116 +191,204 @@ if (isset($_POST["simpan"])) {
   </div>
   <!-- End Edit Modal -->
 
-  <!-- Jumbotron -->
-  <section class="jumbotron" id="home">
-    <main class="contain" data-aos="fade-right" data-aos-duration="1000">
-      <h1 class="text-light">Sehatkan Dirimu Dengan Berolahraga di <span>Sport</span> Center </h1>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat, numquam!
-      </p>
-      <a href="user/lapangan.php" class="btn btn-inti">Booking Sekarang</a>
-    </main>
-  </section>
-  <!-- End Jumbotron -->
+  <main class="main">
 
-  <!-- About -->
-  <section class="about" id="about">
-    <h2 data-aos="fade-down" data-aos-duration="1000">
-      <span>Tentang</span> Kami
-    </h2>
-    <div class="row">
-      <div class="about-img" data-aos="fade-right" data-aos-duration="1000">
-        <img src="img/futsal.jpg" alt="" />
-      </div>
-      <div class="contain" data-aos="fade-left" data-aos-duration="1000">
-        <h4 class="text-center mb-3">Kenapa Memilih kami?</h4>
-        <p>Sport Center adalah pusat olahraga yang menyediakan berbagai fasilitas dan layanan penyewaan lapangan untuk berbagai jenis olahraga. Tempat ini dirancang untuk memfasilitasi kegiatan olahraga dan rekreasi bagi individu, kelompok, dan komunitas yang memiliki minat dalam berpartisipasi dalam aktivitas fisik. Sport Center menawarkan beragam jenis lapangan yang dapat disewa untuk berbagai jenis olahraga, seperti sepak bola, futsal, tenis, basket, voli, dan masih banyak lagi. Setiap lapangan dilengkapi dengan fasilitas yang sesuai, termasuk garis-garis permainan, jaring, dan peralatan yang dibutuhkan untuk menjalankan aktivitas olahraga dengan lancar.</p>
-      </div>
-    </div>
-  </section>
-  <!-- End About -->
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
 
-  <!-- Pembayaran -->
-  <section class="pembayaran" id="bayar">
-    <h2 data-aos="fade-down" data-aos-duration="1000">
-      <span>Tata Cara</span> Pembayaran
-    </h2>
-    <p class="text-center">Berikut adalah tata cara pembayaran lapangan pada website Sport Center:</p>
-    <ul class="border list-group list-group-flush mt-5">
-      <li class="list-group-item">1. Pengguna harus membuat akun atau mendaftar sebagai anggota pada website Sport Center.</li>
-      <li class="list-group-item">2. Pengguna dapat memilih jenis lapangan yang ingin dipesan, memilih tanggal dan waktu tertentu.</li>
-      <li class="list-group-item">3. Pengguna harus memilih tanggal dan waktu, melihat harga sewa lapangan, mengisi jumlah jam atau durasi, melengkapi formulir pemesanan.</li>
-      <li class="list-group-item">4. Bila Dirasa sudah sesuai, pengguna dapat meng klik tombol pesan.</li>
-      <li class="list-group-item">5. Lalu pengguna akan diarahkan ke menu pembayaran</li>
-      <li class="list-group-item">5. Lakukan pembayaran ke rekening yang sudah tertera dan upload bukti pembayaran</li>
-      <li class="list-group-item">5. Setelah upload, tunggu admin menyetujui pembayaran anda</li>
-      <li class="list-group-item">5. Setelah status sudah di setujui, silahkan datang ke Sport Center sesuai jadwal yang di pesan</li>
-    </ul>
-  </section>
-  <!-- End Pembayaran -->
+      <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
 
-  <!-- Contact -->
-  <section id="contact" class="contact" data-aos="fade-down" data-aos-duration="1000">
-    <h2><span>Kontak</span> Kami</h2>
-    <p class="text-center m-5">
-      Hubungi kami jika ada saran yang ingin di sampaikan
-    </p>
-    <div class="row">
-      <div class="col">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d507647.0238694795!2d107.08353226546932!3d-6.264732182087622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69775e79e70e01%3A0x301576d14feb9e0!2sKarawang%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1674768522563!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
+      <div class="container">
+        <h2 data-aos="fade-up" data-aos-delay="100">Sehatkan Dirimu Dengan<br>Berolahraga di <span class="text-"> Basecamp </span> <br> Sport Center</h2>
+        <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+          <a href="user/lapangan.php" class="btn-get-started">Booking Sekarang <i class="bi bi-arrow-right"></i></a>
+        </div>
       </div>
-      <div class="col">
-        <form action="">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i data-feather="user"></i></span>
-            </div>
-            <input type="text" name="" id="" placeholder="nama" class="form-control" />
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 order-1 order-lg-2 my-auto" data-aos="fade-up" data-aos-delay="100">
+            <img src="assets/img/about.jpg" class="img-fluid" alt="">
           </div>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i data-feather="mail"></i></span>
-            </div>
-            <input type="text" name="" id="" placeholder="email" class="form-control" />
+
+          <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
+            <h3>Basecamp Sport Center Hadir Untuk Anda</h3>
+            <p class="fst-italic">
+              Temukan pengalaman olahraga yang luar biasa dengan fasilitas premium kami.
+            </p>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> <span>Fasilitas olahraga terbaru dan terlengkap untuk latihan yang lebih efektif.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Pelatih profesional yang siap membantu Anda mencapai tujuan dengan strategi yang terbukti.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Lingkungan yang mendukung dan nyaman, menciptakan suasana positif untuk setiap latihan.</span></li>
+            </ul>
+            <a href="#" class="read-more "><span>Pelajari Lebih Lanjut</span><i class="bi bi-arrow-right"></i></a>
           </div>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i data-feather="phone"></i></span>
+
+
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Counts Section -->
+    <section id="counts" class="section counts light-background">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-6 col-lg-3 col-md-6">
+            <div class="shadow rounded stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="1232" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Pelanggan</p>
             </div>
-            <input type="text" name="" id="" placeholder="no telp" class="form-control" />
+          </div><!-- End Stats Item -->
+
+          <div class="col-6 col-lg-3 col-md-6">
+            <div class="shadow rounded stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Lapangan</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-6 col-lg-3 col-md-6">
+            <div class="shadow rounded stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Tournament</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-6 col-lg-3 col-md-6">
+            <div class="shadow rounded stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="24" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Membership</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Counts Section -->
+
+    <!-- Courses Section -->
+    <section id="courses" class="courses section">
+
+      <!-- Section Title -->
+      <div class="container d-flex justify-content-between align-items-center" data-aos="fade-up">
+        <div class="left section-title">
+          <h2>Lapangan</h2>
+          <p>Lapangan Terbaik</p>
+        </div>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+          <?php foreach ($lapangan as $row) : ?>
+
+            <div class="col-6 col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+              <div class="course-item">
+                <img src="img/<?= $row["212279_foto"]; ?>" class="img-fluid" alt="...">
+                <div class="course-content">
+                  <p class="category">Lapangan</p>
+                </div>
+                <div class="p-3 text-content">
+                  <h3><a href="course-details.html"><?= $row["212279_nama"]; ?></a></h3>
+                  <p class="description"><?= $row["212279_keterangan"]; ?></p>
+                </div>
+              </div>
+            </div>
+
+          <?php endforeach; ?>
+
+        </div>
+
+      </div>
+
+    </section><!-- /Courses Section -->
+
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-6 col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Basecamp</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>A108 Adam Street</p>
+            <p>Indonesia</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
           </div>
-          <button type="submit" class="btn btn-inti mt-3">Kirim Pesan</button>
-        </form>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-whatsapp"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+
+        <div class=" col-6 col-lg-4 col-md-6 footer-links">
+          <h4>Navigasi</h4>
+          <div class="row">
+            <div class="col-6 col-lg-4">
+              <ul>
+                <li><a href="#">Beranda</a></li>
+                <li><a href="#">Lapangan</a></li>
+                <li><a href="#">Membership</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-lg-4">
+              <ul>
+                <li><a href="#">Tournament</a></li>
+                <li><a href="#">Promo</a></li>
+                <li><a href="#">Kontak</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-6 col-lg-4 col-md-6 footer-links">
+          <h4>Syarat & Ketentuan</h4>
+          <ul>
+            <li><a href="#">Lihat Syarat & Ketentuan</a></li>
+          </ul>
+        </div>
+
       </div>
     </div>
-  </section>
-  <!-- End Contact -->
 
-  <!-- footer -->
-  <footer>
-    <div class="social">
-      <a href="#"><i data-feather="instagram"></i></a>
-      <a href="#"><i data-feather="facebook"></i></a>
-      <a href="#"><i data-feather="twitter"></i></a>
-    </div>
-
-    <div class="links">
-      <a href="#home">Home</a>
-      <a href="#about">Lapangan</a>
-      <a href="#menu">Pembayaran</a>
-      <a href="#contact">Kontak</a>
-    </div>
-
-    <div class="credit">
-      <p>Created by <a href="#">MuhammadSurya & NurHalizah</a> &copy; 2023</p>
-    </div>
   </footer>
-  <!-- End Footer -->
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-  <script>
-    feather.replace();
-  </script>
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>
